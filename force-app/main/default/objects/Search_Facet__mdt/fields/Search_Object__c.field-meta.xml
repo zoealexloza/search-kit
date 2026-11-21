@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Search_Object__c</fullName>
+    <description>The search object this facet belongs to.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >The search object whose results this facet narrows.</inlineHelpText>
+    <label>Search Object</label>
+    <referenceTo>Search_Object__mdt</referenceTo>
+    <relationshipLabel>Search Facets</relationshipLabel>
+    <relationshipName>Search_Facets</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

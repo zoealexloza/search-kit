@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>68.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Site Search Results</masterLabel>
+    <description
+  >Shows search results for the term in the page URL (?term=), grouped by object with optional object tabs, using an admin-defined search configuration.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+        name="configName"
+        type="String"
+        label="Search configuration"
+        description="Which active Search Config controls the objects, fields, filters and boosts."
+        datasource="apex://SearchConfigPicklist"
+        required="true"
+      />
+            <property
+        name="showFacets"
+        type="Boolean"
+        label="Show filters"
+        description="Shows a filter panel with the facets defined in the search configuration."
+        default="true"
+      />
+            <property
+        name="showObjectTabs"
+        type="Boolean"
+        label="Show object tabs"
+        description="Shows an All tab plus one tab per searched object, so visitors can search a single object."
+        default="true"
+      />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

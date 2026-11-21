@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description
+  >Adds or subtracts ranking points for results whose field value matches. Used to re-rank SOSL results.</description>
+    <label>Search Boost Rule</label>
+    <pluralLabel>Search Boost Rules</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

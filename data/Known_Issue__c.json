@@ -1,0 +1,420 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef1"
+      },
+      "Name": "Password reset emails delayed for Outlook.com addresses",
+      "Summary__c": "Password reset emails to Outlook.com and Hotmail addresses can take up to an hour to arrive.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Investigating",
+      "Severity__c": "High",
+      "Featured__c": true,
+      "Reported_Date__c": "2026-04-02",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Add noreply@nimbus.example to your safe senders, or ask your admin to send the reset link from the admin console."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef2"
+      },
+      "Name": "Two-factor codes rejected after changing the phone's time zone",
+      "Summary__c": "After the password, authenticator codes are rejected at login when the phone's clock or time zone was changed manually.",
+      "Product__c": "Nimbus Cloud;Atlas Mobile",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-15",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Turn on automatic date and time on the phone, then sign in again."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef3"
+      },
+      "Name": "Login loop on Safari when cross-site tracking is blocked",
+      "Summary__c": "Safari users with Prevent Cross-Site Tracking on were sent back to the login page after entering their password.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Resolved",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-01-22",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed in the March release. Clear the browser cache if it still happens."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef4"
+      },
+      "Name": "New password not accepted by Atlas Mobile until the next sign-in",
+      "Summary__c": "After a password change, Atlas Mobile keeps asking for the old password until you sign out and in again.",
+      "Product__c": "Atlas Mobile",
+      "Status__c": "Investigating",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-18",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Sign out of Atlas Mobile and sign in with the new password."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef5"
+      },
+      "Name": "Locked out after five failed password attempts on SSO accounts",
+      "Summary__c": "Reported: SSO users are locked out by password attempts they never made. Not confirmed yet.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "New",
+      "Severity__c": "High",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-20",
+      "Visible_to_Guests__c": true
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef6"
+      },
+      "Name": "Invoice PDF shows the old company address",
+      "Summary__c": "Invoices generated after an address change still show the previous address on the PDF.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-28",
+      "Visible_to_Guests__c": false,
+      "Workaround__c": "Download the invoice again after 24 hours; the PDF is regenerated overnight."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef7"
+      },
+      "Name": "Duplicate invoice emails for annual plans",
+      "Summary__c": "Customers on annual plans received the renewal invoice email twice.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-02-10",
+      "Visible_to_Guests__c": false,
+      "Workaround__c": "Fixed. Only one invoice was charged; the second email can be ignored."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef8"
+      },
+      "Name": "Invoice totals rounded differently in the CSV export",
+      "Summary__c": "Totals in the invoice CSV export can differ by one cent from the PDF because of rounding.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Investigating",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-05",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Use the PDF amount for accounting; the export will match after the fix."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef9"
+      },
+      "Name": "Invoice download times out for accounts with many invoices",
+      "Summary__c": "The invoice list fails to load for accounts with more than 500 invoices.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-02-25",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Filter the list by year before downloading."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef10"
+      },
+      "Name": "Tax missing on invoices for new EU customers",
+      "Summary__c": "Reported: VAT is missing on the first invoice of some new EU accounts. Not confirmed yet.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "New",
+      "Severity__c": "High",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-19",
+      "Visible_to_Guests__c": true
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef11"
+      },
+      "Name": "Offline edits lost when the app is closed during sync",
+      "Summary__c": "Changes made offline can be lost if Atlas Mobile is closed while it is syncing them.",
+      "Product__c": "Atlas Mobile",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "Critical",
+      "Featured__c": true,
+      "Reported_Date__c": "2026-04-05",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Keep the app open until the sync icon disappears. Version 5.3 fixes this."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef12"
+      },
+      "Name": "Photos attached offline upload twice",
+      "Summary__c": "Photos added to a record while offline were uploaded twice after reconnecting.",
+      "Product__c": "Atlas Mobile",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-01-30",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed in 5.2. Delete the duplicate photo from the record."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef13"
+      },
+      "Name": "Sync stalls at 99% on Android 15",
+      "Summary__c": "On some Android 15 devices the first sync after an update never finishes.",
+      "Product__c": "Atlas Mobile",
+      "Status__c": "Investigating",
+      "Severity__c": "High",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-12",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Restart the app, or turn off battery optimization for Atlas Mobile."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef14"
+      },
+      "Name": "Battery drain from background sync on iOS",
+      "Summary__c": "Background sync used more battery than expected on iOS 19.",
+      "Product__c": "Atlas Mobile",
+      "Status__c": "Resolved",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-01-08",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed in 5.1."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef15"
+      },
+      "Name": "Calendar sync duplicates recurring events",
+      "Summary__c": "Recurring events edited on the phone appear twice in the web calendar.",
+      "Product__c": "Atlas Mobile;Nimbus Cloud",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-20",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Edit recurring events in the web app until the fix ships."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef16"
+      },
+      "Name": "Dashboard charts blank after the April release",
+      "Summary__c": "Some dashboards show empty charts since the April release when a filter uses a date range.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "High",
+      "Featured__c": true,
+      "Reported_Date__c": "2026-04-08",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Remove and re-add the date filter, or use a relative range such as Last 30 days."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef17"
+      },
+      "Name": "Scheduled report emails an hour late after the clock change",
+      "Summary__c": "Scheduled reports were sent an hour late after daylight saving time started.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-31",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed. Schedules use your time zone again."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef18"
+      },
+      "Name": "Map chart shows the wrong region for some postcodes",
+      "Summary__c": "A few postcodes are placed in a neighbouring region on map charts.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Investigating",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-02-14",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Group by city instead of postcode for now."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef19"
+      },
+      "Name": "CSV export drops leading zeros",
+      "Summary__c": "Values such as 00123 lose their leading zeros when a report is exported to CSV.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Investigating",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-11",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Export to Excel instead, which keeps the values as text."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef20"
+      },
+      "Name": "Dashboard filters reset when sharing a link",
+      "Summary__c": "Reported: filters are lost when a dashboard link is opened by another user. Not confirmed yet.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "New",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-21",
+      "Visible_to_Guests__c": true
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef21"
+      },
+      "Name": "Data import rejects UTF-8 files with a byte order mark",
+      "Summary__c": "CSV files saved with a byte order mark (BOM) failed to import.",
+      "Product__c": "Beacon Analytics",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-01-15",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed. Files with or without a BOM import correctly."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef22"
+      },
+      "Name": "File uploads over 2 GB fail",
+      "Summary__c": "Uploading a single file larger than 2 GB stops at 99%.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Investigating",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-02",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Split the file, or use the desktop sync client, which isn't affected."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef23"
+      },
+      "Name": "Search misses files renamed today",
+      "Summary__c": "Files renamed in the last few hours were not found by their new name.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-02-03",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed. The search index updates within minutes again."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef24"
+      },
+      "Name": "New subfolders don't inherit shared folder permissions",
+      "Summary__c": "Subfolders created inside a shared folder are private to their creator.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Fix in Progress",
+      "Severity__c": "High",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-25",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Share the subfolder again from the folder's Share menu."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef25"
+      },
+      "Name": "API rate limit errors during nightly backups",
+      "Summary__c": "Backup tools hit API rate limits on large accounts between 1 and 3 AM UTC.",
+      "Product__c": "Nimbus Cloud;Beacon Analytics",
+      "Status__c": "Investigating",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-03-18",
+      "Visible_to_Guests__c": false,
+      "Workaround__c": "Spread backups over the night, or ask support for a temporary limit increase."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef26"
+      },
+      "Name": "Notification emails show raw HTML in some email apps",
+      "Summary__c": "Some email apps showed the HTML code of notification emails instead of the message.",
+      "Product__c": "Nimbus Cloud;Atlas Mobile;Beacon Analytics",
+      "Status__c": "Resolved",
+      "Severity__c": "Low",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-01-12",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Fixed. Notifications include a plain-text version."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef27"
+      },
+      "Name": "Admin console slow for large teams",
+      "Summary__c": "The users page in the admin console takes up to 30 seconds to load for teams over 2,000 users.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "Investigating",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-01",
+      "Visible_to_Guests__c": true,
+      "Workaround__c": "Search for a user by name instead of scrolling the full list."
+    },
+    {
+      "attributes": {
+        "type": "Known_Issue__c",
+        "referenceId": "IssueRef28"
+      },
+      "Name": "Workspace invite links expire too early",
+      "Summary__c": "Reported: invite links stop working after a few hours instead of 7 days. Not confirmed yet.",
+      "Product__c": "Nimbus Cloud",
+      "Status__c": "New",
+      "Severity__c": "Medium",
+      "Featured__c": false,
+      "Reported_Date__c": "2026-04-22",
+      "Visible_to_Guests__c": true
+    }
+  ]
+}

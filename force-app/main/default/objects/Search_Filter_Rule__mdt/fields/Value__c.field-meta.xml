@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Value__c</fullName>
+    <description
+  >Comparison value. Type-checked against the field type at runtime. Not used for is_true, is_false, is_blank and is_not_blank. For in: several values separated by semicolons. For Date and Datetime fields also TODAY, YESTERDAY, LAST_N_DAYS:n or NEXT_N_DAYS:n, each meaning one day resolved in the running user's time zone.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >The value to compare against. Leave blank for Is True, Is False, Is Blank and Is Not Blank. For In, separate values with semicolons (Billing;Account). Dates: 2026-01-31, TODAY, YESTERDAY, LAST_N_DAYS:30 or NEXT_N_DAYS:7.</inlineHelpText>
+    <label>Value</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

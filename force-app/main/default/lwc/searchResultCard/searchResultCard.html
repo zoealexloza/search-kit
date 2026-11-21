@@ -1,0 +1,24 @@
+<template>
+  <article class="result-card">
+    <h4 class="result-card__title slds-text-heading_small">
+      <template lwc:if={iconName}>
+        <lightning-icon
+          icon-name={iconName}
+          size="x-small"
+          class="result-card__icon"
+        ></lightning-icon>
+      </template>
+      <a href={url} onclick={handleClick}>{result.title}</a>
+    </h4>
+    <template lwc:if={hasDetails}>
+      <dl class="result-card__details slds-text-body_small">
+        <template for:each={details} for:item="detail">
+          <div key={detail.key} class="result-card__detail">
+            <dt class="result-card__label">{detail.label}</dt>
+            <dd class="result-card__value">{detail.value}</dd>
+          </div>
+        </template>
+      </dl>
+    </template>
+  </article>
+</template>

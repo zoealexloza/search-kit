@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Demo only, partial: the guest profile is created with the site; this file adds only
+         Knowledge data category visibility, which permission sets can't carry. Object and
+         field access come from the Support_Demo_Guest permission set. -->
+    <categoryGroupVisibilities>
+        <dataCategoryGroup>Products</dataCategoryGroup>
+        <visibility>ALL</visibility>
+    </categoryGroupVisibilities>
+</Profile>

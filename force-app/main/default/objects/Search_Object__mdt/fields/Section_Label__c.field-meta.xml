@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Section_Label__c</fullName>
+    <description>Heading for this group of results.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >Heading shown above this group of results. Defaults to the plural label of the object.</inlineHelpText>
+    <label>Section Label</label>
+    <length>80</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

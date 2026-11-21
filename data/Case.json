@@ -1,0 +1,121 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef1"
+      },
+      "Subject": "Cannot reset password",
+      "Description": "The password reset email never arrives for two of our users.",
+      "Status": "New",
+      "Priority": "High",
+      "Origin": "Web",
+      "ContactId": "@ContactRef1",
+      "AccountId": "@AccountRef1"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef2"
+      },
+      "Subject": "Invoice has the wrong address",
+      "Description": "Our March invoice shows our old warehouse address.",
+      "Status": "Working",
+      "Priority": "Medium",
+      "Origin": "Web",
+      "ContactId": "@ContactRef2",
+      "AccountId": "@AccountRef1"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef3"
+      },
+      "Subject": "Mobile app sync stuck",
+      "Description": "Atlas Mobile has not synced since yesterday. Offline changes are piling up.",
+      "Status": "Escalated",
+      "Priority": "High",
+      "Origin": "Web",
+      "ContactId": "@ContactRef1",
+      "AccountId": "@AccountRef1"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef4"
+      },
+      "Subject": "Need a copy of last year invoices",
+      "Description": "Please send all invoices for 2025 for our accountant.",
+      "Status": "Closed",
+      "Priority": "Low",
+      "Origin": "Web",
+      "ContactId": "@ContactRef3",
+      "AccountId": "@AccountRef2"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef5"
+      },
+      "Subject": "Export to CSV times out",
+      "Description": "Exporting the sales dashboard to CSV fails after a few minutes.",
+      "Status": "New",
+      "Priority": "Medium",
+      "Origin": "Web",
+      "ContactId": "@ContactRef3",
+      "AccountId": "@AccountRef2"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef6"
+      },
+      "Subject": "Locked out after password change",
+      "Description": "After changing my password I am locked out of the mobile app.",
+      "Status": "Working",
+      "Priority": "High",
+      "Origin": "Web",
+      "ContactId": "@ContactRef4",
+      "AccountId": "@AccountRef3"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef7"
+      },
+      "Subject": "Add a billing contact",
+      "Description": "Please add our office manager as a billing contact.",
+      "Status": "Closed",
+      "Priority": "Low",
+      "Origin": "Web",
+      "ContactId": "@ContactRef4",
+      "AccountId": "@AccountRef3"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef8"
+      },
+      "Subject": "Dashboard shows no data for May",
+      "Description": "All charts are empty when I pick May.",
+      "Status": "Closed",
+      "Priority": "Medium",
+      "Origin": "Web",
+      "ContactId": "@ContactRef2",
+      "AccountId": "@AccountRef1"
+    },
+    {
+      "attributes": {
+        "type": "Case",
+        "referenceId": "CaseRef9"
+      },
+      "Subject": "Question about plan upgrade",
+      "Description": "What changes if we upgrade to the annual plan?",
+      "Status": "Closed",
+      "Priority": "Low",
+      "Origin": "Web",
+      "ContactId": "@ContactRef3",
+      "AccountId": "@AccountRef2"
+    }
+  ]
+}

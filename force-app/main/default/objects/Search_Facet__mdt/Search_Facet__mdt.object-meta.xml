@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description
+  >A field offered as a filter facet on the results page. Picklist, multi-select picklist or checkbox fields only in v1.</description>
+    <label>Search Facet</label>
+    <pluralLabel>Search Facets</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

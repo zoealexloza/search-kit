@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <categoryGroupVisibilities>
+        <dataCategoryGroup>Products</dataCategoryGroup>
+        <visibility>ALL</visibility>
+    </categoryGroupVisibilities>
+    <custom>true</custom>
+    <description
+  >Demo only. Logged-in support portal customers (Customer Community license). Access comes from the Support_Demo_User and Site_Search_Kit_User permission sets; Knowledge data category visibility is here (permission sets can't carry it).</description>
+    <userLicense>Customer Community</userLicense>
+</Profile>

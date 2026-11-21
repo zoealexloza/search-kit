@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <name>All</name>
+        <label>All</label>
+        <dataCategory>
+            <name>Nimbus_Cloud</name>
+            <label>Nimbus Cloud</label>
+        </dataCategory>
+        <dataCategory>
+            <name>Atlas_Mobile</name>
+            <label>Atlas Mobile</label>
+        </dataCategory>
+        <dataCategory>
+            <name>Beacon_Analytics</name>
+            <label>Beacon Analytics</label>
+        </dataCategory>
+    </dataCategory>
+    <description
+  >Demo only. Products for Knowledge articles, the same as the help articles' Product picklist.</description>
+    <label>Products</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

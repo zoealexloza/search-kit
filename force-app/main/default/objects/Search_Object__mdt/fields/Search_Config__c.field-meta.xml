@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Search_Config__c</fullName>
+    <description>The config this object belongs to.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >The search config that includes this object.</inlineHelpText>
+    <label>Search Config</label>
+    <referenceTo>Search_Config__mdt</referenceTo>
+    <relationshipLabel>Search Objects</relationshipLabel>
+    <relationshipName>Search_Objects</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

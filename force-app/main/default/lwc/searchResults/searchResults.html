@@ -1,0 +1,148 @@
+<template>
+  <div class={layoutClass}>
+    <template lwc:if={showFacetPanel}>
+      <div class="search-results__facets">
+        <c-search-facets
+          facets={panelFacets}
+          expanded={filtersExpanded}
+          onfacettoggle={handleFacetToggle}
+          onfacetchange={handleFacetChange}
+          onfacetclear={handleFacetClear}
+        ></c-search-facets>
+      </div>
+    </template>
+
+    <section class="search-results" aria-busy={ariaBusy}>
+      <template lwc:if={heading}>
+        <h2 class="search-results__heading slds-text-heading_medium">
+          {heading}
+        </h2>
+      </template>
+
+      <template lwc:if={showTabs}>
+        <div class="slds-tabs_default search-results__tabs">
+          <ul
+            class="slds-tabs_default__nav"
+            role="tablist"
+            aria-label={label.tabsLabel}
+            onkeydown={handleTabKeydown}
+          >
+            <template for:each={tabs} for:item="tab">
+              <li key={tab.id} class={tab.className} role="presentation">
+                <button
+                  type="button"
+                  class="slds-tabs_default__link search-results__tab"
+                  role="tab"
+                  id={tab.id}
+                  aria-selected={tab.ariaSelected}
+                  aria-controls="results-panel"
+                  tabindex={tab.tabIndex}
+                  data-object-api-name={tab.objectApiName}
+                  onclick={handleTabClick}
+                >
+                  {tab.label}
+                </button>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </template>
+
+      <div
+        id="results-panel"
+        class="search-results__panel"
+        role={panelRole}
+        aria-labelledby={panelLabelledBy}
+      >
+        <!-- Always rendered so screen readers register the live region before its text changes. -->
+        <p class="search-results__status slds-m-bottom_medium" role="status">
+          {statusMessage}
+        </p>
+
+        <template lwc:if={isLoading}>
+          <div class="search-results__spinner">
+            <lightning-spinner
+              alternative-text={label.loadingLabel}
+              size="medium"
+            ></lightning-spinner>
+          </div>
+        </template>
+
+        <template lwc:if={hasError}>
+          <div class="search-results__error slds-text-color_error" role="alert">
+            {errorMessage}
+          </div>
+        </template>
+
+        <template lwc:if={hasResults}>
+          <template lwc:if={loadMoreError}>
+            <div
+              class="search-results__error slds-text-color_error slds-m-bottom_medium"
+              role="alert"
+            >
+              {loadMoreError}
+            </div>
+          </template>
+          <template for:each={groups} for:item="group">
+            <section
+              key={group.objectApiName}
+              data-group={group.objectApiName}
+              class="search-results__group slds-m-bottom_large"
+            >
+              <h3 class="search-results__group-heading slds-text-heading_small">
+                <template lwc:if={group.iconName}>
+                  <lightning-icon
+                    icon-name={group.iconName}
+                    size="small"
+                    class="slds-m-right_x-small"
+                  ></lightning-icon>
+                </template>
+                <span>{group.sectionLabel}</span>
+              </h3>
+              <ul class="search-results__list">
+                <template for:each={group.results} for:item="result">
+                  <li key={result.recordId} class="search-results__item">
+                    <c-search-result-card
+                      result={result}
+                      object-api-name={group.objectApiName}
+                      icon-name={group.iconName}
+                    ></c-search-result-card>
+                  </li>
+                </template>
+              </ul>
+              <template lwc:if={group.canViewAll}>
+                <div class="search-results__more slds-m-top_small">
+                  <button
+                    type="button"
+                    class="slds-button search-results__view-all"
+                    data-object-api-name={group.objectApiName}
+                    onclick={handleViewAll}
+                  >
+                    {group.viewAllLabel}
+                  </button>
+                </div>
+              </template>
+              <template lwc:if={group.canLoadMore}>
+                <div class="search-results__more slds-m-top_small">
+                  <lightning-button
+                    label={group.loadMoreLabel}
+                    data-object-api-name={group.objectApiName}
+                    onclick={handleLoadMore}
+                  ></lightning-button>
+                  <template lwc:if={group.isLoadingMore}>
+                    <div class="search-results__more-spinner">
+                      <lightning-spinner
+                        alternative-text={label.loadingLabel}
+                        size="small"
+                      ></lightning-spinner>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </section>
+          </template>
+        </template>
+      </div>
+    </section>
+  </div>
+</template>

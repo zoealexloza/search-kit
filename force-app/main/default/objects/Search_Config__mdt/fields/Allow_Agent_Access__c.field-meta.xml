@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allow_Agent_Access__c</fullName>
+    <description
+  >Lets Agentforce agents use this config through the Site Search action. Off by default: a service agent runs as its own agent user, whose access can differ from a site visitor's, so an admin chooses which configs agents may use (typically ones with only public content).</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >Allow Agentforce agents to search with this config. Only turn on for configs whose results the agent user may share with anyone it talks to.</inlineHelpText>
+    <label>Allow Agent Access</label>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Demo only, partial: data category visibility for the demo agent user (standard
+         profile Einstein Agent User), which permission sets can't carry. Without it the agent
+         config's Knowledge object (restricted to Products > Nimbus Cloud) is skipped: a category
+         the running user can't see fails closed. -->
+    <categoryGroupVisibilities>
+        <dataCategoryGroup>Products</dataCategoryGroup>
+        <visibility>ALL</visibility>
+    </categoryGroupVisibilities>
+</Profile>

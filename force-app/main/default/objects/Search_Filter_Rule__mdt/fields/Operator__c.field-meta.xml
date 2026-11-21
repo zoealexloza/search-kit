@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Operator__c</fullName>
+    <description>Comparison applied to the field.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>How the field is compared to the value.</inlineHelpText>
+    <label>Operator</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>equals</fullName>
+                <default>false</default>
+                <label>Equals</label>
+            </value>
+            <value>
+                <fullName>not_equals</fullName>
+                <default>false</default>
+                <label>Not Equals</label>
+            </value>
+            <value>
+                <fullName>includes</fullName>
+                <default>false</default>
+                <label>Includes (multi-select)</label>
+            </value>
+            <value>
+                <fullName>greater_than</fullName>
+                <default>false</default>
+                <label>Greater Than</label>
+            </value>
+            <value>
+                <fullName>less_than</fullName>
+                <default>false</default>
+                <label>Less Than</label>
+            </value>
+            <value>
+                <fullName>is_true</fullName>
+                <default>false</default>
+                <label>Is True</label>
+            </value>
+            <value>
+                <fullName>is_false</fullName>
+                <default>false</default>
+                <label>Is False</label>
+            </value>
+            <value>
+                <fullName>is_blank</fullName>
+                <default>false</default>
+                <label>Is Blank</label>
+            </value>
+            <value>
+                <fullName>is_not_blank</fullName>
+                <default>false</default>
+                <label>Is Not Blank</label>
+            </value>
+            <value>
+                <fullName>in</fullName>
+                <default>false</default>
+                <label>In (any of, separate with ;)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

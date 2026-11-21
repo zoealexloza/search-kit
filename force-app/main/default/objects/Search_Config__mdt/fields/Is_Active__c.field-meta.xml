@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Active__c</fullName>
+    <description
+  >Only active configs can be selected in Experience Builder or used by a search.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >Inactive configs are ignored by the search component.</inlineHelpText>
+    <label>Active</label>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

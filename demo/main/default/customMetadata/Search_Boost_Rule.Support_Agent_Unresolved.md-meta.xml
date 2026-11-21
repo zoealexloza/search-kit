@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Support Agent - Not Resolved Yet</label>
+    <protected>false</protected>
+    <values>
+        <field>Search_Object__c</field>
+        <value xsi:type="xsd:string">Support_Agent_Known_Issues</value>
+    </values>
+    <values>
+        <field>Field__c</field>
+        <value xsi:type="xsd:string">Status__c</value>
+    </values>
+    <values>
+        <field>Operator__c</field>
+        <value xsi:type="xsd:string">not_equals</value>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">Resolved</value>
+    </values>
+    <values>
+        <field>Points__c</field>
+        <value xsi:type="xsd:double">10</value>
+    </values>
+</CustomMetadata>

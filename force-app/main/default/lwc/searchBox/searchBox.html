@@ -1,0 +1,21 @@
+<template>
+  <div class="search-box" role="search">
+    <lightning-input
+      class="search-box__input"
+      type="search"
+      label={label.inputLabel}
+      variant="label-hidden"
+      placeholder={placeholder}
+      value={term}
+      maxlength="1000"
+      onchange={handleChange}
+      onkeyup={handleKeyUp}
+    ></lightning-input>
+    <lightning-button
+      class="search-box__button"
+      label={label.buttonLabel}
+      variant="brand"
+      onclick={handleSubmit}
+    ></lightning-button>
+  </div>
+</template>

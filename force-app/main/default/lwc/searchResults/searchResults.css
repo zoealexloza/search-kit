@@ -1,0 +1,84 @@
+/* Never wider than the region the site template gives the component (Aura templates
+   place it in flex and fixed-width regions that do not constrain an inline host). */
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.search-results__spinner {
+  position: relative;
+  min-height: var(--slds-g-sizing-11, 4rem);
+}
+
+.search-results__group-heading {
+  display: flex;
+  align-items: center;
+  padding-bottom: var(--slds-g-spacing-2, 0.5rem);
+  border-bottom: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+}
+
+.search-results__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-results__item + .search-results__item {
+  border-top: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+}
+
+/* Narrow screens: the filter panel stacks above the results. Wider: a left column that is just
+   the "Filters" button while collapsed, and the full panel while open. */
+.search-results__layout_with-facets {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--slds-g-spacing-4, 1rem) var(--slds-g-spacing-5, 1.5rem);
+}
+
+@media (min-width: 48em) {
+  .search-results__layout_with-facets {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  .search-results__layout_facets-open {
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  }
+}
+
+.search-results__more {
+  display: flex;
+  align-items: center;
+  gap: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.search-results__more-spinner {
+  position: relative;
+  width: var(--slds-g-sizing-7, 2rem);
+  height: var(--slds-g-sizing-7, 2rem);
+}
+
+.search-results__heading {
+  margin-bottom: var(--slds-g-spacing-3, 0.75rem);
+  overflow-wrap: anywhere;
+}
+
+.search-results__tabs {
+  margin-bottom: var(--slds-g-spacing-4, 1rem);
+}
+
+/* SLDS styles the tab link for anchors; tabs here are buttons (they act, they don't navigate). */
+.search-results__tab {
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.search-results__view-all {
+  padding: 0;
+}

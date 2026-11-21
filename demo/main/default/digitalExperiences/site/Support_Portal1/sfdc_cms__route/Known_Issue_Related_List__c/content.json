@@ -1,0 +1,12 @@
+{
+  "type" : "sfdc_cms__route",
+  "title" : "Known Issue Related List",
+  "contentBody" : {
+    "activeViewId" : "Known_Issue_Related_List",
+    "configurationTags" : [ ],
+    "pageAccess" : "UseParent",
+    "routeType" : "relatedlist-Known_Issue__c",
+    "urlPrefix" : "known-issue"
+  },
+  "urlName" : "known-issue-related-list"
+}

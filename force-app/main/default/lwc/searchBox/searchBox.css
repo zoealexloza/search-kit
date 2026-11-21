@@ -1,0 +1,25 @@
+/* Never wider than the region the site template gives the component (Aura templates
+   place it in flex and fixed-width regions that do not constrain an inline host). */
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.search-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--slds-g-spacing-2, 0.5rem);
+  align-items: center;
+}
+
+.search-box__input {
+  /* Wraps the button onto its own line below about 12rem instead of overflowing. */
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.search-box__button {
+  flex: 0 0 auto;
+}

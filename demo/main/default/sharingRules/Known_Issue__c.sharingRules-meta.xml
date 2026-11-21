@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingGuestRules>
+        <fullName>Confirmed_Issues_For_Guests</fullName>
+        <accessLevel>Read</accessLevel>
+        <description
+    >Demo only. Site guests can read known issues that are confirmed (not New) and marked Visible to Guests; never unconfirmed or customer-only ones.</description>
+        <label>Guest-visible confirmed issues</label>
+        <sharedTo>
+            <guestUser>Support_Portal</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Visible_to_Guests__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+</SharingRules>

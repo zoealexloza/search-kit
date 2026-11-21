@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Visible_to_Guests__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description
+  >Opt-in: site guests (not logged in) can read this issue only when it is confirmed (not New) and this box is ticked. Enforced by the guest sharing rule.</description>
+    <inlineHelpText
+  >Tick to show this issue to visitors who aren't logged in. It must also be confirmed (not New).</inlineHelpText>
+    <label>Visible to Guests</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,118 @@
+/* Never wider than the region the site template gives the component (Aura templates
+   place it in flex and fixed-width regions that do not constrain an inline host). */
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.search-facets__heading {
+  margin: 0;
+  font-size: inherit;
+}
+
+/* The toggle and the open body form one card: the toggle is its header. */
+.search-facets__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--slds-g-spacing-2, 0.5rem);
+  width: 100%;
+  min-height: var(--slds-g-sizing-9, 2.75rem);
+  padding: 0 var(--slds-g-spacing-3, 0.75rem);
+  border: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+  border-radius: var(--slds-g-radius-border-2, 0.25rem);
+  background: var(--slds-g-color-surface-container-1, #ffffff);
+  color: var(--slds-g-color-on-surface-3, #181818);
+  font: inherit;
+  font-weight: var(--slds-g-font-weight-bold, 700);
+  text-align: start;
+  cursor: pointer;
+}
+
+.search-facets__toggle:hover {
+  background: var(--slds-g-color-surface-container-2, #f3f3f3);
+}
+
+.search-facets__toggle-text {
+  flex: 1 1 auto;
+}
+
+.search-facets_expanded .search-facets__toggle {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.search-facets__body {
+  padding: var(--slds-g-spacing-4, 1rem);
+  border: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+  border-top: 0;
+  border-end-start-radius: var(--slds-g-radius-border-2, 0.25rem);
+  border-end-end-radius: var(--slds-g-radius-border-2, 0.25rem);
+  background: var(--slds-g-color-surface-container-1, #ffffff);
+}
+
+.search-facets__body_collapsed {
+  display: none;
+}
+
+/* With facets from several objects: one section per object, divided like result groups. */
+.search-facets__section + .search-facets__section {
+  margin-top: var(--slds-g-spacing-4, 1rem);
+  padding-top: var(--slds-g-spacing-4, 1rem);
+  border-top: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+}
+
+.search-facets__section-heading {
+  margin: 0 0 var(--slds-g-spacing-3, 0.75rem);
+  font-size: inherit;
+  font-weight: var(--slds-g-font-weight-bold, 700);
+  color: var(--slds-g-color-on-surface-3, #181818);
+}
+
+.search-facets__group {
+  display: block;
+}
+
+.search-facets__group + .search-facets__group {
+  margin-top: var(--slds-g-spacing-4, 1rem);
+}
+
+.search-facets__footer {
+  margin-top: var(--slds-g-spacing-4, 1rem);
+  padding-top: var(--slds-g-spacing-3, 0.75rem);
+  border-top: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
+}
+
+.search-facets__none {
+  margin: 0;
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+/* "Clear filters": a text-style button that stays focusable when there's nothing to clear. */
+.search-facets__clear {
+  padding: var(--slds-g-spacing-1, 0.25rem) 0;
+  border: 0;
+  background: none;
+  color: var(--slds-g-color-accent-2, #0b5cab);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.search-facets__clear[aria-disabled="true"] {
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+  text-decoration: none;
+  cursor: default;
+}
+
+.search-facets__toggle:focus-visible,
+.search-facets__clear:focus-visible {
+  outline: var(--slds-g-sizing-border-2, 2px) solid
+    var(--slds-g-color-accent-2, #0b5cab);
+  outline-offset: var(--slds-g-sizing-border-2, 2px);
+}

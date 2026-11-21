@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>SiteSearchController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description
+  >Runtime access for site users who run searches. Grants access to the search controller. Object, field and record access to the searched objects is granted separately (see the README: Guest user setup).</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Site Search Kit User</label>
+</PermissionSet>

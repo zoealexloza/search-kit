@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Category_Group__c</fullName>
+    <description
+  >Knowledge only: API name of the data category group that results are restricted to. Validated against the data category describe for the running user at search time.</description>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText
+  >Knowledge only. API name of a data category group, for example Products. Leave blank to search every category the visitor can see.</inlineHelpText>
+    <label>Data Category Group</label>
+    <length>80</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>SiteSearchAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description
+  >For the Agentforce agent user: access to the Site Search agent action. The agent searches with the agent user's own object, field and record access, granted separately, and only with configs that have Allow Agent Access turned on.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Site Search Kit Agent</label>
+</PermissionSet>

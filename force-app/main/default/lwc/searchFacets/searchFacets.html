@@ -1,0 +1,68 @@
+<template>
+  <section class={panelClass} aria-labelledby="facets-toggle">
+    <!-- Disclosure pattern: the heading holds the button, which names and controls the panel. -->
+    <h2 class="search-facets__heading">
+      <button
+        type="button"
+        id="facets-toggle"
+        class="search-facets__toggle"
+        aria-expanded={ariaExpanded}
+        aria-controls="facets-body"
+        onclick={handleToggle}
+      >
+        <lightning-icon
+          icon-name="utility:filterList"
+          size="x-small"
+          class="search-facets__toggle-icon"
+        ></lightning-icon>
+        <span class="search-facets__toggle-text">{toggleText}</span>
+        <lightning-icon
+          icon-name={chevronIcon}
+          size="xx-small"
+          class="search-facets__chevron"
+        ></lightning-icon>
+      </button>
+    </h2>
+    <div id="facets-body" class={bodyClass}>
+      <template lwc:if={hasFacets}>
+        <template for:each={sections} for:item="section">
+          <div
+            key={section.key}
+            class="search-facets__section"
+            data-section={section.key}
+          >
+            <template lwc:if={section.showHeading}>
+              <h3 class="search-facets__section-heading">{section.heading}</h3>
+            </template>
+            <template for:each={section.facets} for:item="facet">
+              <lightning-checkbox-group
+                key={facet.key}
+                class="search-facets__group"
+                label={facet.label}
+                name={facet.key}
+                options={facet.options}
+                value={facet.selected}
+                data-object-api-name={facet.objectApiName}
+                data-field-api-name={facet.fieldApiName}
+                onchange={handleChange}
+              ></lightning-checkbox-group>
+            </template>
+          </div>
+        </template>
+        <div class="search-facets__footer">
+          <button
+            type="button"
+            class="search-facets__clear"
+            aria-disabled={clearDisabled}
+            onclick={handleClear}
+          >
+            {label.clearLabel}
+          </button>
+        </div>
+      </template>
+      <template lwc:else>
+        <p class="search-facets__none">{label.noneLabel}</p>
+      </template>
+    </div>
+  </section>
+</template>

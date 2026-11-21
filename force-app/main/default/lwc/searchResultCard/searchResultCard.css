@@ -1,0 +1,52 @@
+/* Never wider than the region the site template gives the component (Aura templates
+   place it in flex and fixed-width regions that do not constrain an inline host). */
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.result-card {
+  padding: var(--slds-g-spacing-3, 0.75rem) 0;
+}
+
+.result-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-5, 1.5rem);
+  margin-top: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.result-card__detail {
+  display: flex;
+  gap: var(--slds-g-spacing-1, 0.25rem);
+  min-width: 0;
+}
+
+.result-card__label {
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.result-card__label::after {
+  content: ":";
+}
+
+.result-card__value {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.result-card__title {
+  overflow-wrap: anywhere;
+}
+
+.result-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.result-card__icon {
+  flex-shrink: 0;
+}

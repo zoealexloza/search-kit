@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Search_Error_Config_Not_Found</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search error: configuration not found</shortDescription>
+        <value
+    >Search isn't set up correctly. Ask the site administrator to check the search configuration.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Error_Generic</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search error: unexpected</shortDescription>
+        <value
+    >Something went wrong while searching. Try again in a moment.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Error_Invalid_Request</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search error: invalid request</shortDescription>
+        <value
+    >The search request was incomplete. Refresh the page and try again.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Untitled</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search result without a title</shortDescription>
+        <value>(Untitled)</value>
+    </labels>
+    <labels>
+        <fullName>Search_Value_No</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Checkbox value: false</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Search_Value_Yes</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Checkbox value: true</shortDescription>
+        <value>Yes</value>
+    </labels>
+
+    <labels>
+        <fullName>Search_Box_Label</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search box: input label (screen readers)</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Search_Box_Placeholder</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search box: default placeholder</shortDescription>
+        <value>Search...</value>
+    </labels>
+    <labels>
+        <fullName>Search_Box_Button</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search box: submit button</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Prompt</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search results: no term entered yet</shortDescription>
+        <value>Enter a search term to see results.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Term_Too_Short</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: term under 2 characters</shortDescription>
+        <value>Enter at least 2 characters to search.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Loading</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search results: loading</shortDescription>
+        <value>Searching...</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_None</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: nothing found. {0} = term</shortDescription>
+        <value>No results for &quot;{0}&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Count_One</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: one result. {0} = term</shortDescription>
+        <value>1 result for &quot;{0}&quot;</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Count_Many</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: several results. {0} = count, {1} = term</shortDescription>
+        <value>{0} results for &quot;{1}&quot;</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Prompt_Facets</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: no term or filter chosen yet</shortDescription>
+        <value>Enter a search term or choose a filter to see results.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_None_Filtered</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: nothing found with filters. {0} = term</shortDescription>
+        <value>No results for &quot;{0}&quot; with the selected filters.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_None_Browse</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: no records match the filters (no term)</shortDescription>
+        <value>No results match the selected filters.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Count_Browse_One</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: one result, filters only (no term)</shortDescription>
+        <value>1 result</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Count_Browse_Many</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: several results, filters only. {0} = count</shortDescription>
+        <value>{0} results</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Load_More</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: load more button. {0} = section label</shortDescription>
+        <value>Load more {0}</value>
+    </labels>
+    <labels>
+        <fullName>Search_Facets_None</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search facets: panel note on a tab whose object has no filters</shortDescription>
+        <value>No filters for this tab.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Facets_Clear</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search facets: clear all selections</shortDescription>
+        <value>Clear filters</value>
+    </labels>
+    <labels>
+        <fullName>Search_Facets_Toggle</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search facets: show/hide button for the filter panel</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>Search_Facets_Toggle_Count</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search facets: show/hide button with selection count. {0} = count</shortDescription>
+        <value>Filters ({0} selected)</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Heading</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: heading above the results. {0} = search term</shortDescription>
+        <value>Results for “{0}”</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Heading_Browse</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: heading when browsing by filters without a term</shortDescription>
+        <value>Results</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Tab_All</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: tab that shows every object</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Tabs</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: accessible name of the object tab list</shortDescription>
+        <value>Search results by type</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_View_All</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search results: All tab link that opens an object tab. {0} = section label</shortDescription>
+        <value>View all {0}</value>
+    </labels>
+    <labels>
+        <fullName>Search_Agent_Summary</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Agent action: summary before the results. {0} = count, {1} = term</shortDescription>
+        <value>{0} results for “{1}”, best first:</value>
+    </labels>
+    <labels>
+        <fullName>Search_Agent_No_Results</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Agent action: no results. {0} = search term</shortDescription>
+        <value>No results for “{0}”.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Agent_Not_Allowed</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Agent action: config not opted in for agents</shortDescription>
+        <value>This search isn’t available to agents.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Agent_Too_Many</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Agent action: request over the per-call limit</shortDescription>
+        <value>Too many searches in one request. Try again with fewer.</value>
+    </labels>
+</CustomLabels>
