@@ -5,7 +5,7 @@
       "versionNumber": "1.0.0.NEXT",
       "path": "force-app",
       "default": true,
-      "package": "Site Search Kit",
+      "package": "Search Kit",
       "versionDescription": "Admin-configurable search for Salesforce Experience Cloud sites: searchable objects, filters, boost rules and facets from Custom Metadata."
     },
     {
@@ -13,12 +13,12 @@
       "default": false
     }
   ],
-  "name": "site-search-kit",
+  "name": "search-kit",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "68.0",
   "packageAliases": {
-    "Site Search Kit": "0HogK0000005YdlSAE",
-    "Site Search Kit@1.0.0-1": "04tgK000000aIrFQAU"
+    "Search Kit": "0HogK0000005YdlSAE",
+    "Search Kit@1.0.0-1": "04tgK000000aIrFQAU"
   }
 }
