@@ -94,7 +94,7 @@ This walkthrough searches **Cases**. The values in steps 2–4 are **example dat
    - Search Config: `Help Center Search`
    - Object: `Case`
    - Title Field: `Subject`
-   - Detail Field 1–3: e.g. `CaseNumber`, `Status`, `AccountId`. A lookup field shows the related record's name (`AccountId` shows the account name, `OwnerId` the owner's or queue's name), labelled without "ID" ("Account"). If the visitor can't read the related object or its name, or can't see that record, the detail is left out; IDs are never shown.
+   - Detail Field 1–3: e.g. `CaseNumber`, `Status`, `AccountId`. A lookup field shows the related record's name (`AccountId` shows the account name, `OwnerId` the owner's or queue's name), labelled without "ID" ("Account"). If the visitor can't read the related object or its name, or can't see that record, the detail is left out; IDs are never shown. **User names on sites:** with the site preference **Display nicknames instead of full names** on (the default; Experience Workspaces → Administration → Preferences), Salesforce shows visitors each user's Nickname instead of their name, so an owner may appear as a generated nickname like `jsmith1.234`. Either set internal users' nicknames to what visitors should see (e.g. "Jane S."), or turn the preference off, which shows internal users' full names to everyone who can see them, guests included.
    - Section Label: `Cases`
    - Icon Name: `standard:case`
    - Sort Order: `1`
