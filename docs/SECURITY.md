@@ -69,17 +69,18 @@ Since M10 an article object (`__kav`) can be a search object. The service adds `
 
 ## Tests
 
-138 Apex tests, 97% org-wide coverage (every search class 99–100%, `SiteSearchAction` 100%). Security-relevant cases include:
+171 Apex tests, 97% org-wide coverage. Security-relevant cases include:
 
 - Objects and fields hidden from the user: `System.runAs` a Minimum Access user, with and without Account Read.
 - Injection-style input: `'`, `\`, `\'`, SOSL reserved characters, `RETURNING` / `}` break-out attempts, and a 100,000-character term. Since M8 also in rule values: `in` lists with an injected part, and relative dates with trailing text (`LAST_N_DAYS:30 OR Id != null`, `TODAY' OR …`), negative or non-numeric n.
 - Invalid configuration: unknown fields, wrong value types, unsupported operators (operator × field type tables), and filter rules that must fail closed.
 - Filter and boost agree: each new operator runs as a real SOQL filter and through the boost engine on the same records, with the same result.
-- Facet selections for unconfigured fields or invalid values.
+- Facet selections for unconfigured fields or invalid values, and values outside a facet's configured Values list.
+- Lookup detail fields: a user who can read Case and its `AccountId` field but not Account gets no `Account.Name` in the query (the detail is skipped, never shown as an ID).
 - Agent action: configs without agent access are refused, unknown configs and unexpected errors return label messages only, a minimum-access user gets no records, injection-style terms return only configured objects, and 200 requests run at most 10 SOSL queries.
 - Every SOSL path uses `Test.setFixedSearchResults`.
 
-140 LWC Jest tests, including axe-core accessibility checks.
+156 LWC Jest tests, including axe-core accessibility checks.
 
 Guest and logged-in customer access was tested end to end in scratch orgs, as an anonymous visitor through the site's API and with record-access checks per user. Details are in `docs/PROGRESS.md` (Milestone 5).
 

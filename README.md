@@ -8,17 +8,17 @@ Standard Experience Cloud search is hard to tune: admins can't easily say "only 
 
 ## Features
 
-- **Search across several objects**, grouped by object, with a title, up to three detail fields and a link to each record.
+- **Search across several objects**, grouped by object, with a title, up to three detail fields and a link to each record. Lookup details show the related record's name (Account, Owner), never an ID.
 - **Fixed filters** as structured rules (field, operator, value), e.g. `Status = Published`. No raw SOQL in configuration.
 - **Boost rules** that re-rank results, e.g. `Featured is true → +50`. SOSL doesn't let you control ranking; this does.
-- **Facets** on picklist, multi-select and checkbox fields, with or without a search term ("browse"). Selections are kept in the URL, so filtered results can be shared and the back button restores them.
+- **Facets** on picklist, multi-select and checkbox fields, with or without a search term ("browse"). Selections are kept in the URL, so filtered results can be shared and the back button restores them. Admins can choose which values a facet offers and in what order.
 - **Object tabs** like Salesforce's Experience Cloud search: an **All** tab plus one tab per object (e.g. only Cases), kept in the URL. On All, "View all" opens an object's tab; on an object tab, **Load more** grows that list.
 - **Agentforce action:** agents search with the same configurations, filters and boosts, for configs an admin has opted in. See [Use with Agentforce](#use-with-agentforce).
 - **Knowledge articles** next to other objects: always published versions only, in the visitor's site language, optionally restricted to a data category. See [Knowledge](#knowledge).
 - Loading, empty and error states.
-- **Experience Builder friendly:** a search box for the header, a results component, and a picklist of your search configurations in the property panel. Works on **LWR** and **Aura** sites.
+- **Experience Builder friendly:** a search box for the header, a results component, and a picklist of your search configurations in the property panel. Works on **LWR** and **Aura** sites, including the built-in search slot of Aura theme headers.
 - **Guest users and logged-in customers:** every query runs as the visitor. The [Guest user setup](#guest-user-setup) section covers exactly what to grant.
-- **Accessible:** keyboard-friendly, a live region announces result counts, focus is managed after "Load more", a collapsible filter panel (collapsed by default, it stays in place across tabs), and axe checks in every component test.
+- **Accessible:** keyboard-friendly, a live region announces result counts, focus is managed after "Load more", a collapsible filter panel (collapsed by default, it stays in place across tabs) in which each filter also opens and closes on its own, and axe checks in every component test.
 - **Translatable:** every visible string is a Custom Label.
 
 ## How boost scoring works
@@ -61,7 +61,7 @@ flowchart LR
 1. The search box sends the visitor to the search page with `?term=`.
 2. The results component calls one Apex method with the configuration name, term, facet selections and page size.
 3. The service loads the configuration (Custom Metadata, no query limits used), validates every object and field against the schema and the visitor's access, and builds **one SOSL query** for a term, or **SOQL per object** when only facets are selected.
-4. Results are re-ranked with the boost rules, mapped to display-ready values (picklist labels, locale-formatted dates) and returned with the facet definitions.
+4. Results are re-ranked with the boost rules, mapped to display-ready values (picklist labels, locale-formatted dates, related record names for lookups) and returned with the facet definitions.
 
 **Configuration** is five Custom Metadata types: `Search_Config__mdt` → `Search_Object__mdt` → `Search_Filter_Rule__mdt`, `Search_Boost_Rule__mdt`, `Search_Facet__mdt`. Details are in [docs/SPEC.md](docs/SPEC.md).
 
@@ -77,6 +77,8 @@ Or with the Salesforce CLI:
 ```bash
 sf package install -p 04tgK000000aIrFQAU -o <your-org> -w 20
 ```
+
+Version 1.0.0 doesn't yet include the changes from 2026-11-24: **Site Search Box (Aura Header)**, related record names for lookup detail fields, the facet **Values** field and collapsible filters. Until the next version, deploy them from this repository's `force-app` folder.
 
 Choose **Install for Admins Only**, then give access with the two permission sets (see below). Try it in a sandbox first.
 
