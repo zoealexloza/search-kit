@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>68.0</apiVersion>
+    <description
+  >Site Search Box for the search slot of an Aura site's theme header (Theme settings, Search Component).</description>
+</AuraDefinitionBundle>

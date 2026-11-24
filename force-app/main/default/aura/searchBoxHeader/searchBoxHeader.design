@@ -1,0 +1,13 @@
+<design:component label="Site Search Box (Aura Header)">
+  <design:attribute
+    name="searchPageName"
+    label="Search page API name"
+    description="API name of the page that holds the Site Search Results component, e.g. Site_Search__c. In Experience Builder, open that page's Page Properties to see it. If it doesn't match, searching shows an 'Invalid page' message."
+    required="true"
+  />
+  <design:attribute
+    name="placeholderText"
+    label="Placeholder text"
+    description="Shown in the empty search box. Leave blank for the default."
+  />
+</design:component>

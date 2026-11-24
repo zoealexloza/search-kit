@@ -535,3 +535,16 @@ Owner feedback from the M10 demo check, approved as its own milestone (SPEC §10
 
 - **Product name: Search Kit** (owner). The working name was Site Search Kit; permission set, component and v1 package labels still use it.
 - **Public repository** (owner): this repository, published with a fresh history.
+
+## 2026-11-24: Search box in Aura theme headers
+
+Found by the owner on an Aura site (Customer Service template, Compact Header): the header's search slot only offers Aura components that implement `forceCommunity:searchInterface` ("Search", "Global Search"). An LWC can't implement an Aura interface, so Site Search Box could not go in the header there and search was not on every page.
+
+- **New Aura bundle `searchBoxHeader`** ("Site Search Box (Aura Header)", owner approved): implements `forceCommunity:searchInterface`, wraps `c:searchBox` and passes `searchPageName` (default `Site_Search__c`, the usual Aura name) and `placeholderText` through a design file. No logic of its own, so no new tests; behaviour stays covered by the `searchBox` Jest tests. `access="global"` so Builder can offer it from a package.
+- Deployed to `sskit-old` (has the "Support Portal Aura" test site).
+- **Also seen on that site (setup, not a bug):** with the box's Search page API name pointing at the wrong page, searching showed the org's own error page, and the results component, loaded without `?term=`, logged only its empty-term call (the one that loads the filter definitions). README now says to use a page of its own on Aura, not the template's standard Search page.
+- **Code Analyzer** on the bundle: 0 findings.
+
+### Open issues
+
+- **To confirm in Builder (owner):** the component is listed under Theme settings → Search Component, its properties can be set from the header, and searching from the header on a non-search page lands on results.

@@ -1,0 +1,30 @@
+<!--
+  Aura theme header slot for the search box. Aura theme layouts (for example Customer Service
+  with the Compact Header) only offer components that implement forceCommunity:searchInterface
+  as their Search Component, and an LWC can't implement an Aura interface. This wrapper only
+  passes its properties through; all search behavior lives in the searchBox LWC.
+-->
+<aura:component
+  implements="forceCommunity:searchInterface"
+  access="global"
+  description="Site Search Box for the search slot of an Aura site's theme header."
+>
+  <aura:attribute
+    name="searchPageName"
+    type="String"
+    default="Site_Search__c"
+    access="global"
+    description="API name of the page that holds the Site Search Results component."
+  />
+  <aura:attribute
+    name="placeholderText"
+    type="String"
+    access="global"
+    description="Shown in the empty search box. Blank uses the default label."
+  />
+
+  <c:searchBox
+    searchPageName="{!v.searchPageName}"
+    placeholderText="{!v.placeholderText}"
+  />
+</aura:component>
