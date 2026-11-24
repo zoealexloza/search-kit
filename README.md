@@ -67,18 +67,18 @@ flowchart LR
 
 ## Install
 
-**Version 1.0.0** (unlocked package, no namespace):
+**Version 1.1.0** (unlocked package, no namespace):
 
-- [Install in production or a Developer Edition org](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgK000000aIrFQAU)
-- [Install in a sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgK000000aIrFQAU)
+- [Install in production or a Developer Edition org](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgK000000bmSHQAY)
+- [Install in a sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgK000000bmSHQAY)
 
 Or with the Salesforce CLI:
 
 ```bash
-sf package install -p 04tgK000000aIrFQAU -o <your-org> -w 20
+sf package install -p 04tgK000000bmSHQAY -o <your-org> -w 20
 ```
 
-Version 1.0.0 doesn't yet include the changes from 2026-11-24: **Site Search Box (Aura Header)**, related record names for lookup detail fields, the facet **Values** field and collapsible filters. Until the next version, deploy them from this repository's `force-app` folder.
+Already on 1.0.0? Installing 1.1.0 upgrades it in place and keeps your search configurations. New in 1.1.0: **Site Search Box (Aura Header)** for Aura theme headers, related record names for lookup detail fields, the facet **Values** field and collapsible filters.
 
 Choose **Install for Admins Only**, then give access with the two permission sets (see below). Try it in a sandbox first.
 
