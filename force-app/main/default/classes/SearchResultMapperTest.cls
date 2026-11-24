@@ -180,4 +180,53 @@ private class SearchResultMapperTest {
     Assert.isFalse(objects[1].hasFacets);
     Assert.areEqual('Account', objects[1].objectApiName);
   }
+
+  @IsTest
+  static void lookupDetailsShowTheRelatedNameNeverTheId() {
+    SearchConfig.ObjectConfig config = new SearchConfig.ObjectConfig();
+    config.developerName = 'Contacts';
+    config.objectApiName = 'Contact';
+    config.titleField = 'LastName';
+    config.detailFields = new List<String>{ 'AccountId' };
+    SearchTarget target = new SchemaValidator().validate(config);
+    String prefix = Contact.SObjectType.getDescribe(
+        SObjectDescribeOptions.DEFERRED
+      )
+      .getKeyPrefix();
+    Id accountId =
+      Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFERRED)
+        .getKeyPrefix() + '000000000001';
+
+    Contact withName = new Contact(
+      Id = prefix + '000000000001',
+      LastName = 'Lee',
+      AccountId = accountId,
+      Account = new Account(Id = accountId, Name = 'Acme')
+    );
+    // AccountId set but the related record not returned, as when sharing hides it.
+    Contact hiddenAccount = new Contact(
+      Id = prefix + '000000000002',
+      LastName = 'Kim',
+      AccountId = accountId
+    );
+    SearchResponseDto.ObjectGroup objectGroup = SearchResultMapper.toGroup(
+      target,
+      new List<BoostRuleEngine.ScoredRecord>{
+        new BoostRuleEngine.ScoredRecord(withName, 0, 1),
+        new BoostRuleEngine.ScoredRecord(hiddenAccount, 1, 1)
+      },
+      false
+    );
+
+    SearchResponseDto.Detail detail = objectGroup.results[0].details[0];
+    Assert.areEqual('Acme', detail.value);
+    Assert.areEqual(
+      target.getLookupName(target.detailFields[0]).label,
+      detail.label
+    );
+    Assert.isTrue(
+      objectGroup.results[1].details.isEmpty(),
+      'No name to show: the detail is left out rather than showing the ID'
+    );
+  }
 }

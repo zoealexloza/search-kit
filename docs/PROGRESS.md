@@ -548,3 +548,19 @@ Found by the owner on an Aura site (Customer Service template, Compact Header): 
 ### Open issues
 
 - **To confirm in Builder (owner):** the component is listed under Theme settings → Search Component, its properties can be set from the header, and searching from the header on a non-search page lands on results.
+
+## 2026-11-24: Names for lookup detail fields
+
+Owner request: a lookup detail field (e.g. `AccountId`, `OwnerId`) showed the raw record ID. Now it shows the related record's name. No Custom Metadata change: admins keep listing the lookup field.
+
+- **`SchemaValidator`:** a lookup detail field is kept only if every object it can point to is readable with a readable name field (`isNameField()`: `Name`, `CaseNumber`, `Title`...). Otherwise it is skipped and logged, so an ID is never shown. Polymorphic lookups (`OwnerId`: user or queue) use `Name`. Standard lookup labels drop the " ID" suffix ("Account ID" → "Account"); custom lookup labels are kept. The suffix check is English-only; in other languages the translated label is shown as is.
+- **`SearchTarget`:** `getQueryFields()` selects `Account.Name` instead of `AccountId` for a lookup detail.
+- **`SearchResultMapper`:** shows the related name; an empty lookup or a related record hidden by sharing leaves the detail out.
+- **Checked in a scratch org first** (throwaway test class in `sskit-old`, deleted after): `Owner.Name` in user mode returns the name for both user and queue owners; selecting `Account.Name` as a user without Account read throws `QueryException` ("Didn't understand relationship"), which is why the related object is validated per user. Standard lookups are labelled "Account ID", "Owner ID", "Parent Case ID"; Case's name field is `CaseNumber`.
+- **Tests:** 164 Apex tests pass (+6), 97% org-wide: query paths (Account.Name, Owner.Name, Parent.CaseNumber), labels, a user without Account read (detail skipped, Owner kept, no ID selected), the mapper leaving out a lookup whose record isn't returned, and a SOSL search end to end.
+- **Behaviour change:** a lookup detail field that the visitor can't resolve to a name used to show an ID; now it's left out.
+- **Code Analyzer:** no new findings in the changed classes (one missing ApexDoc description found and fixed).
+
+### Open issues
+
+- **To confirm on a site (owner):** Case results with `AccountId` and `OwnerId` details, as a logged-in customer and as a guest. Whether a guest sees owner names depends on the site's user visibility settings; if the guest can't see the owner, the detail is left out.

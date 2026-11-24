@@ -10,7 +10,9 @@
  * - Knowledge article object whose PublishStatus or Language field isn't readable, or whose
  *   data category is invalid or not visible to the running user: the object is skipped
  *   (fail closed, for the same reason)
- * - detail field, boost rule or facet invalid: only that entry is skipped
+ * - detail field, boost rule or facet invalid: only that entry is skipped. A lookup detail
+ *   field shows the related record's name; if the running user can't read that name, the field
+ *   is skipped too, so record IDs are never shown
  *
  * Validation is per running user: a field hidden by field-level security for a guest user is
  * skipped for that user only. This also keeps USER_MODE queries from failing on such fields.
@@ -127,6 +129,8 @@ public inherited sharing class SchemaValidator {
   );
 
   private final Map<String, Schema.DescribeSObjectResult> describeCache = new Map<String, Schema.DescribeSObjectResult>();
+  /** Readable name field per related object, or null if there is none; for lookup details. */
+  private final Map<Schema.SObjectType, Schema.DescribeFieldResult> nameFieldCache = new Map<Schema.SObjectType, Schema.DescribeFieldResult>();
 
   /**
    * Validates every object in a configuration, keeping config order.
@@ -319,7 +323,9 @@ public inherited sharing class SchemaValidator {
   }
 
   /**
-   * Adds readable detail fields; invalid ones are skipped and logged.
+   * Adds readable detail fields; invalid ones are skipped and logged. A lookup field is kept
+   * only if the running user can read the related record's name, which is shown instead of
+   * the ID.
    * @param target the target being built
    * @param objectConfig the object's configuration
    */
@@ -337,10 +343,102 @@ public inherited sharing class SchemaValidator {
           objectConfig.developerName,
           'detail field "' + detailFieldName + '" is not a readable field'
         );
-      } else {
-        target.detailFields.add(detailField);
+        continue;
+      }
+      if (detailField.getType() == Schema.DisplayType.REFERENCE) {
+        SearchTarget.LookupName lookup = describeLookupName(detailField);
+        if (lookup == null) {
+          logSkip(
+            objectConfig.developerName,
+            'detail field "' +
+              detailFieldName +
+              '" is a lookup whose related record name is not readable'
+          );
+          continue;
+        }
+        target.lookupNames.put(detailField.getName().toLowerCase(), lookup);
+      }
+      target.detailFields.add(detailField);
+    }
+  }
+
+  /**
+   * Works out how to show a lookup field's related record name for the running user. Every
+   * object the lookup can point to must be readable and have a readable name field: a
+   * user-mode query that selects a relationship the user can't read fails as a whole.
+   * @param field a lookup (REFERENCE) field
+   * @return the name to select, or null if it can't be shown
+   */
+  @TestVisible
+  private SearchTarget.LookupName describeLookupName(
+    Schema.DescribeFieldResult field
+  ) {
+    List<Schema.SObjectType> relatedTypes = field.getReferenceTo();
+    if (String.isBlank(field.getRelationshipName()) || relatedTypes.isEmpty()) {
+      return null;
+    }
+    String nameField;
+    for (Schema.SObjectType relatedType : relatedTypes) {
+      Schema.DescribeFieldResult relatedName = readableNameField(relatedType);
+      if (relatedName == null) {
+        return null;
+      }
+      nameField = relatedName.getName();
+    }
+    SearchTarget.LookupName lookup = new SearchTarget.LookupName();
+    lookup.relationshipName = field.getRelationshipName();
+    // A polymorphic lookup (OwnerId: user or queue) is queried through the Name object, whose
+    // name field is always Name.
+    lookup.nameField = field.isNamePointing() ? 'Name' : nameField;
+    lookup.label = lookupLabel(field);
+    return lookup;
+  }
+
+  /**
+   * Finds an object's name field (Name, CaseNumber, Title...) if the running user can read the
+   * object and that field.
+   * @param objectType the related object
+   * @return the name field, or null
+   */
+  private Schema.DescribeFieldResult readableNameField(
+    Schema.SObjectType objectType
+  ) {
+    if (nameFieldCache.containsKey(objectType)) {
+      return nameFieldCache.get(objectType);
+    }
+    Schema.DescribeFieldResult nameField;
+    Schema.DescribeSObjectResult objectDescribe = objectType.getDescribe(
+      SObjectDescribeOptions.DEFERRED
+    );
+    if (objectDescribe.isAccessible()) {
+      for (
+        Schema.SObjectField token : objectDescribe.fields.getMap().values()
+      ) {
+        Schema.DescribeFieldResult candidate = token.getDescribe();
+        if (candidate.isNameField()) {
+          nameField = candidate.isAccessible() ? candidate : null;
+          break;
+        }
       }
     }
+    nameFieldCache.put(objectType, nameField);
+    return nameField;
+  }
+
+  /**
+   * Label for a lookup detail. Standard lookups are labelled like "Account ID" or "Owner ID";
+   * the value shown is a name, so the " ID" suffix is dropped. Custom lookup labels are the
+   * admin's own and kept as they are.
+   * @param field a lookup field
+   * @return the label to show
+   */
+  @TestVisible
+  private static String lookupLabel(Schema.DescribeFieldResult field) {
+    String label = field.getLabel();
+    if (!field.isCustom() && label.length() > 3 && label.endsWith(' ID')) {
+      return label.removeEnd(' ID');
+    }
+    return label;
   }
 
   /**

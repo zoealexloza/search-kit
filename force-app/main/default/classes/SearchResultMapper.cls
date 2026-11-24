@@ -1,7 +1,8 @@
 /**
  * Maps ranked records to response DTOs, formatting every value server-side for the running
  * user's locale: picklist labels instead of API values, localized dates and numbers, Yes/No for
- * checkboxes. Rich text is reduced to plain text and long values are shortened.
+ * checkboxes, the related record's name for lookups. Rich text is reduced to plain text and
+ * long values are shortened.
  *
  * inherited sharing: works on records already queried, no queries or DML.
  */
@@ -67,15 +68,37 @@ public inherited sharing class SearchResultMapper {
     );
     result.title = String.isBlank(title) ? System.Label.Search_Untitled : title;
     for (Schema.DescribeFieldResult field : target.detailFields) {
-      String value = formatValue(scored.record.get(field.getName()), field);
+      SearchTarget.LookupName lookup = target.getLookupName(field);
+      String value = lookup == null
+        ? formatValue(scored.record.get(field.getName()), field)
+        : lookupNameValue(scored.record, lookup);
       if (String.isNotBlank(value)) {
         SearchResponseDto.Detail detail = new SearchResponseDto.Detail();
-        detail.label = field.getLabel();
+        detail.label = lookup == null ? field.getLabel() : lookup.label;
         detail.value = value;
         result.details.add(detail);
       }
     }
     return result;
+  }
+
+  /**
+   * The related record's name for a lookup detail. Null when the lookup is empty or the
+   * visitor can't see the related record (sharing), so the detail is left out, never an ID.
+   * @param record a record queried with the lookup's name path
+   * @param lookup the validated lookup
+   * @return display text, or null
+   */
+  @TestVisible
+  private static String lookupNameValue(
+    SObject record,
+    SearchTarget.LookupName lookup
+  ) {
+    SObject related = record.getSObject(lookup.relationshipName);
+    Object name = related == null ? null : related.get(lookup.nameField);
+    return name == null
+      ? null
+      : String.valueOf(name).abbreviate(MAX_VALUE_LENGTH);
   }
 
   /**

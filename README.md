@@ -92,7 +92,7 @@ This walkthrough searches **Cases**. The values in steps 2–4 are **example dat
    - Search Config: `Help Center Search`
    - Object: `Case`
    - Title Field: `Subject`
-   - Detail Field 1–3: e.g. `CaseNumber`, `Status`
+   - Detail Field 1–3: e.g. `CaseNumber`, `Status`, `AccountId`. A lookup field shows the related record's name (`AccountId` shows the account name, `OwnerId` the owner's or queue's name), labelled without "ID" ("Account"). If the visitor can't read the related object or its name, or can't see that record, the detail is left out; IDs are never shown.
    - Section Label: `Cases`
    - Icon Name: `standard:case`
    - Sort Order: `1`

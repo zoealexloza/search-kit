@@ -1150,4 +1150,117 @@ private class SchemaValidatorTest {
       );
     }
   }
+
+  // ---- lookup detail fields ----
+
+  @IsTest
+  static void lookupDetailFieldsSelectTheRelatedName() {
+    SearchConfig.ObjectConfig config = objectConfig('Case', 'Subject');
+    config.detailFields = new List<String>{
+      'accountid',
+      'OwnerId',
+      'ParentId',
+      'Status'
+    };
+    SearchTarget target = new SchemaValidator().validate(config);
+
+    Assert.areEqual(4, target.detailFields.size());
+    SearchTarget.LookupName account = target.getLookupName(
+      target.detailFields[0]
+    );
+    Assert.areEqual('Account.Name', account.path());
+    Assert.areEqual(
+      Case.AccountId.getDescribe().getLabel().removeEnd(' ID'),
+      account.label
+    );
+    Assert.areEqual(
+      'Owner.Name',
+      target.getLookupName(target.detailFields[1]).path(),
+      'Polymorphic owner (user or queue) goes through the Name object'
+    );
+    Assert.areEqual(
+      'Parent.CaseNumber',
+      target.getLookupName(target.detailFields[2]).path(),
+      'Uses the related object\'s own name field'
+    );
+    Assert.isNull(target.getLookupName(target.detailFields[3]), 'Not a lookup');
+
+    List<String> fields = target.getQueryFields();
+    Assert.isTrue(fields.contains('Account.Name'));
+    Assert.isTrue(fields.contains('Owner.Name'));
+    Assert.isFalse(
+      fields.contains('AccountId'),
+      'The ID itself is not selected for display'
+    );
+  }
+
+  @IsTest
+  static void lookupToAnUnreadableObjectIsSkipped() {
+    // No object permissions at all: Account (and so Case.AccountId's name) is not readable.
+    User guestLike = SearchTestFactory.minimumAccessUser(false);
+    System.runAs(guestLike) {
+      Assert.isNull(
+        new SchemaValidator().describeLookupName(Case.AccountId.getDescribe()),
+        'A user-mode query on Account.Name would fail, so the lookup is dropped'
+      );
+    }
+  }
+
+  @IsTest
+  static void lookupLabelDropsTheIdSuffixOnStandardLookups() {
+    Assert.areEqual(
+      Case.OwnerId.getDescribe().getLabel().removeEnd(' ID'),
+      SchemaValidator.lookupLabel(Case.OwnerId.getDescribe())
+    );
+    Assert.areEqual(
+      Account.Name.getDescribe().getLabel(),
+      SchemaValidator.lookupLabel(Account.Name.getDescribe()),
+      'Labels without the suffix are kept'
+    );
+  }
+
+  @IsTest
+  static void lookupDetailIsSkippedWhenTheRelatedObjectIsNotReadable() {
+    // Read on Case and its AccountId field, but none on Account.
+    User restricted = SearchTestFactory.minimumAccessUser(false);
+    System.runAs(new User(Id = UserInfo.getUserId())) {
+      PermissionSet permissionSet = new PermissionSet(
+        Name = 'Lookup_Test_Case_Read',
+        Label = 'Lookup Test Case Read'
+      );
+      insert permissionSet;
+      insert new ObjectPermissions(
+        ParentId = permissionSet.Id,
+        SobjectType = 'Case',
+        PermissionsRead = true
+      );
+      insert new FieldPermissions(
+        ParentId = permissionSet.Id,
+        SobjectType = 'Case',
+        Field = 'Case.AccountId',
+        PermissionsRead = true
+      );
+      insert new PermissionSetAssignment(
+        AssigneeId = restricted.Id,
+        PermissionSetId = permissionSet.Id
+      );
+    }
+    System.runAs(restricted) {
+      SearchConfig.ObjectConfig config = objectConfig('Case', 'CaseNumber');
+      config.detailFields = new List<String>{ 'AccountId', 'OwnerId' };
+      SearchTarget target = new SchemaValidator().validate(config);
+      Assert.isNotNull(target, 'Case is still searchable');
+      Assert.areEqual(1, target.detailFields.size());
+      Assert.areEqual(
+        'OwnerId',
+        target.detailFields[0].getName(),
+        'Account name is not readable, so only Owner is kept'
+      );
+      Assert.isFalse(target.getQueryFields().contains('Account.Name'));
+      Assert.isFalse(
+        target.getQueryFields().contains('AccountId'),
+        'Never falls back to showing the ID'
+      );
+    }
+  }
 }

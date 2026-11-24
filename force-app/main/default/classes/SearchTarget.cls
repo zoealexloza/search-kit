@@ -13,6 +13,11 @@ public inherited sharing class SearchTarget {
   public Schema.DescribeSObjectResult objectDescribe;
   public Schema.DescribeFieldResult titleField;
   public List<Schema.DescribeFieldResult> detailFields = new List<Schema.DescribeFieldResult>();
+  /**
+   * Lookup detail fields, keyed by lower-case field API name: the related record's name is
+   * queried and shown instead of its ID. Every lookup detail field has an entry.
+   */
+  public Map<String, LookupName> lookupNames = new Map<String, LookupName>();
   /** Always applied, combined with AND. */
   public List<FieldRule> filterRules = new List<FieldRule>();
   public List<FieldRule> boostRules = new List<FieldRule>();
@@ -34,9 +39,10 @@ public inherited sharing class SearchTarget {
   public String knowledgeLanguage;
 
   /**
-   * Fields to select: Id, title, details, then any field a boost rule or facet needs.
+   * Fields to select: Id, title, details, then any field a boost rule or facet needs. A lookup
+   * detail field is selected as the related record's name (e.g. Account.Name), not its ID.
    * Duplicates removed (case-insensitive), first occurrence wins.
-   * @return canonical field API names
+   * @return canonical field API names and relationship paths
    */
   public List<String> getQueryFields() {
     List<String> fields = new List<String>();
@@ -44,7 +50,8 @@ public inherited sharing class SearchTarget {
     addField(fields, seen, 'Id');
     addField(fields, seen, titleField.getName());
     for (Schema.DescribeFieldResult field : detailFields) {
-      addField(fields, seen, field.getName());
+      LookupName lookup = getLookupName(field);
+      addField(fields, seen, lookup == null ? field.getName() : lookup.path());
     }
     for (FieldRule rule : boostRules) {
       addField(fields, seen, rule.field.getName());
@@ -53,6 +60,15 @@ public inherited sharing class SearchTarget {
       addField(fields, seen, facet.field.getName());
     }
     return fields;
+  }
+
+  /**
+   * Returns how to show the related record's name for a lookup detail field.
+   * @param field a detail field
+   * @return the lookup's name path, or null if the field is not a lookup
+   */
+  public LookupName getLookupName(Schema.DescribeFieldResult field) {
+    return lookupNames.get(field.getName().toLowerCase());
   }
 
   /**
@@ -103,6 +119,27 @@ public inherited sharing class SearchTarget {
     public String groupName;
     public String categoryName;
     public String operator;
+  }
+
+  /**
+   * A lookup detail field whose related record's name the running user can read, e.g.
+   * relationshipName Account and nameField Name for Case.AccountId. Polymorphic lookups such as
+   * OwnerId (user or queue) use the Name field that every related object shares. Names are
+   * canonical, from describe results.
+   */
+  public class LookupName {
+    public String relationshipName;
+    public String nameField;
+    /** Display label, e.g. "Account" for a field labelled "Account ID". */
+    public String label;
+
+    /**
+     * The relationship path to select in the query.
+     * @return e.g. Account.Name
+     */
+    public String path() {
+      return relationshipName + '.' + nameField;
+    }
   }
 
   /** A validated facet on a picklist, multi-select picklist or checkbox field. */

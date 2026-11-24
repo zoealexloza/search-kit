@@ -703,4 +703,46 @@ private class SearchServiceTest {
       SearchService.resolveLimit(100000, 10)
     );
   }
+
+  // ---- lookup detail fields ----
+
+  @IsTest
+  static void lookupDetailsShowNamesEndToEnd() {
+    Search_Config__mdt config = SearchTestFactory.config(
+      SearchTestFactory.CONFIG_NAME,
+      true,
+      3
+    );
+    SearchTestFactory.register(
+      new List<SObject>{
+        config,
+        SearchTestFactory.searchObject(
+          config,
+          'Contacts',
+          'Contact',
+          'LastName',
+          new List<String>{ 'AccountId', 'OwnerId' },
+          10
+        )
+      }
+    );
+    Account company = new Account(Name = 'Widget Co');
+    insert company;
+    Contact person = new Contact(
+      LastName = 'Widgetson',
+      AccountId = company.Id
+    );
+    insert person;
+    Test.setFixedSearchResults(new List<Id>{ person.Id });
+
+    SearchResponseDto response = new SearchService()
+      .search(SearchTestFactory.request('widget'));
+
+    List<SearchResponseDto.Detail> details = response.groups[0]
+      .results[0]
+      .details;
+    Assert.areEqual(2, details.size());
+    Assert.areEqual('Widget Co', details[0].value);
+    Assert.areEqual(UserInfo.getName(), details[1].value);
+  }
 }
