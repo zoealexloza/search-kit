@@ -211,6 +211,15 @@
         <value>Filters</value>
     </labels>
     <labels>
+        <fullName>Search_Facet_Heading_Count</fullName>
+        <categories>Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Search facet heading with count. {0} = filter label, {1} = count</shortDescription>
+        <value>{0} ({1} selected)</value>
+    </labels>
+    <labels>
         <fullName>Search_Facets_Toggle_Count</fullName>
         <categories>Search</categories>
         <language>en_US</language>

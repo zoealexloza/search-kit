@@ -146,5 +146,10 @@ public inherited sharing class SearchTarget {
   public class Facet {
     public Schema.DescribeFieldResult field;
     public String label;
+    /**
+     * The values to offer, in display order: active picklist values in canonical spelling, or
+     * 'true' / 'false' for a checkbox. Null offers every value.
+     */
+    public List<String> values;
   }
 }

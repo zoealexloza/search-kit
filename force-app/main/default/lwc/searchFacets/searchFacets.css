@@ -73,12 +73,37 @@
   color: var(--slds-g-color-on-surface-3, #181818);
 }
 
-.search-facets__group {
-  display: block;
+/* One collapsible section per facet, divided by a line like an accordion. */
+.search-facets__group + .search-facets__group {
+  margin-top: var(--slds-g-spacing-2, 0.5rem);
+  padding-top: var(--slds-g-spacing-2, 0.5rem);
+  border-top: var(--slds-g-sizing-border-1, 1px) solid
+    var(--slds-g-color-border-1, #e5e5e5);
 }
 
-.search-facets__group + .search-facets__group {
-  margin-top: var(--slds-g-spacing-4, 1rem);
+.search-facets__group-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--slds-g-spacing-2, 0.5rem);
+  width: 100%;
+  min-height: var(--slds-g-sizing-8, 2rem);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--slds-g-color-on-surface-3, #181818);
+  font: inherit;
+  font-weight: var(--slds-g-font-weight-bold, 700);
+  text-align: start;
+  cursor: pointer;
+}
+
+.search-facets__group-body {
+  padding: var(--slds-g-spacing-1, 0.25rem) 0 var(--slds-g-spacing-2, 0.5rem)
+    var(--slds-g-spacing-5, 1.5rem);
+}
+
+.search-facets__group-body_collapsed {
+  display: none;
 }
 
 .search-facets__footer {
@@ -111,6 +136,7 @@
 }
 
 .search-facets__toggle:focus-visible,
+.search-facets__group-toggle:focus-visible,
 .search-facets__clear:focus-visible {
   outline: var(--slds-g-sizing-border-2, 2px) solid
     var(--slds-g-color-accent-2, #0b5cab);

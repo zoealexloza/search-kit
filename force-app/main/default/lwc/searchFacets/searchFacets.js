@@ -3,6 +3,7 @@ import clearLabel from "@salesforce/label/c.Search_Facets_Clear";
 import toggleLabel from "@salesforce/label/c.Search_Facets_Toggle";
 import toggleCountLabel from "@salesforce/label/c.Search_Facets_Toggle_Count";
 import noneLabel from "@salesforce/label/c.Search_Facets_None";
+import groupCountLabel from "@salesforce/label/c.Search_Facet_Heading_Count";
 
 /** Key for one facet. Field names repeat across objects, so the object is part of it. */
 export function facetKey(objectApiName, fieldApiName) {
@@ -25,6 +26,13 @@ export function facetKey(objectApiName, fieldApiName) {
  * "Clear filters" is always rendered and uses aria-disabled rather than
  * disappearing, so keyboard focus is never lost when it is used.
  *
+ * Each facet is a disclosure of its own (heading button with aria-expanded / aria-controls),
+ * so a long list of filters can be scanned and opened one by one. Facets start open, or
+ * closed when collapseFilters is set; a facet with a selected value always starts open, and
+ * shows its count in the heading while closed. The visitor's open/closed choices are kept
+ * here (not in the parent): only this panel's layout depends on them. Collapsed values stay
+ * rendered (hidden), so a selection is never lost.
+ *
  * When facets come from more than one object, they are grouped under each object's section
  * label (h3), so two facets with the same label (e.g. "Status" on two objects) can be told
  * apart. With one object there is no extra heading.
@@ -44,22 +52,48 @@ export default class SearchFacets extends LightningElement {
   /** Whether the panel is open. Owned by the parent; starts closed so results come first. */
   @api expanded = false;
 
+  /** Starts each facet closed (Experience Builder property on searchResults). */
+  @api collapseFilters = false;
+
+  /** Facet key to the open state the visitor chose; facets not in it use the default. */
+  openByKey = {};
+
   label = { clearLabel, noneLabel };
 
   get facetGroups() {
     return (this.facets ?? [])
       .filter((facet) => facet.values?.length)
-      .map((facet) => ({
-        key: facetKey(facet.objectApiName, facet.fieldApiName),
-        objectApiName: facet.objectApiName,
-        sectionLabel: facet.sectionLabel || facet.objectApiName,
-        fieldApiName: facet.fieldApiName,
-        label: facet.label,
-        options: facet.values.map(({ value, label }) => ({ value, label })),
-        selected: facet.values
+      .map((facet, index) => {
+        const key = facetKey(facet.objectApiName, facet.fieldApiName);
+        const selected = facet.values
           .filter((value) => value.selected)
-          .map((value) => value.value)
-      }));
+          .map((value) => value.value);
+        const open =
+          this.openByKey[key] ?? (!this.collapseFilters || selected.length > 0);
+        return {
+          key,
+          objectApiName: facet.objectApiName,
+          sectionLabel: facet.sectionLabel || facet.objectApiName,
+          fieldApiName: facet.fieldApiName,
+          label: facet.label,
+          options: facet.values.map(({ value, label }) => ({ value, label })),
+          selected,
+          open,
+          bodyId: `facet-values-${index}`,
+          ariaExpanded: open ? "true" : "false",
+          chevronIcon: open ? "utility:chevrondown" : "utility:chevronright",
+          bodyClass: open
+            ? "search-facets__group-body"
+            : "search-facets__group-body search-facets__group-body_collapsed",
+          // While closed, the heading says how many values are selected inside.
+          headingText:
+            !open && selected.length
+              ? groupCountLabel
+                  .replace("{0}", facet.label)
+                  .replace("{1}", String(selected.length))
+              : facet.label
+        };
+      });
   }
 
   /** Facets grouped by object, in server order. */
@@ -77,7 +111,13 @@ export default class SearchFacets extends LightningElement {
     }
     const sections = [...byObject.values()];
     const showHeading = sections.length > 1;
-    return sections.map((section) => ({ ...section, showHeading }));
+    // Facet headings sit under the panel's h2, or under each object's h3.
+    const facetHeadingLevel = showHeading ? "4" : "3";
+    return sections.map((section) => ({
+      ...section,
+      showHeading,
+      facetHeadingLevel
+    }));
   }
 
   get hasFacets() {
@@ -124,6 +164,14 @@ export default class SearchFacets extends LightningElement {
     this.dispatchEvent(
       new CustomEvent("facettoggle", { detail: { expanded: !this.expanded } })
     );
+  }
+
+  handleGroupToggle(event) {
+    const { key } = event.currentTarget.dataset;
+    const facet = this.facetGroups.find((group) => group.key === key);
+    if (facet) {
+      this.openByKey = { ...this.openByKey, [key]: !facet.open };
+    }
   }
 
   handleChange(event) {

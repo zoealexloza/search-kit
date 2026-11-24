@@ -1,6 +1,7 @@
 /**
  * Facets: validates the visitor's selections, turns them into query conditions, and lists the
- * values each facet offers (from picklist describe, or Yes/No for checkboxes).
+ * values each facet offers (from picklist describe, or Yes/No for checkboxes; only the
+ * configured Values, in their order, when the facet has them).
  *
  * Selections come from the browser, so anything not configured is ignored without an error:
  * unknown objects, fields that are not configured facets, and values that are not active
@@ -121,7 +122,7 @@ public inherited sharing class FacetService {
       );
       for (SearchTarget.Facet facet : target.facets) {
         List<SearchResponseDto.FacetValue> values = withoutExcludedValues(
-          describeValues(facet.field, selectedValues(byField, facet)),
+          describeValues(facet, selectedValues(byField, facet)),
           facet.field,
           target.filterRules
         );
@@ -160,19 +161,36 @@ public inherited sharing class FacetService {
     return selected;
   }
 
+  /**
+   * The values a facet offers before filter rules: the configured Values in their order, or
+   * else every active picklist value (Yes and No for a checkbox).
+   * @param facet the facet
+   * @param selected values to mark as selected
+   * @return value, label and selected flag per value
+   */
   private static List<SearchResponseDto.FacetValue> describeValues(
-    Schema.DescribeFieldResult field,
+    SearchTarget.Facet facet,
     Set<String> selected
   ) {
-    List<SearchResponseDto.FacetValue> values = new List<SearchResponseDto.FacetValue>();
-    if (field.getType() == Schema.DisplayType.BOOLEAN) {
-      values.add(facetValue('true', System.Label.Search_Value_Yes, selected));
-      values.add(facetValue('false', System.Label.Search_Value_No, selected));
-      return values;
+    // Picklist order kept in a list: it is the display order when no Values are configured.
+    List<String> picklistOrder = new List<String>();
+    Map<String, String> labels = new Map<String, String>();
+    if (facet.field.getType() == Schema.DisplayType.BOOLEAN) {
+      picklistOrder.addAll(new List<String>{ 'true', 'false' });
+      labels.put('true', System.Label.Search_Value_Yes);
+      labels.put('false', System.Label.Search_Value_No);
+    } else {
+      for (Schema.PicklistEntry entry : facet.field.getPicklistValues()) {
+        if (entry.isActive()) {
+          picklistOrder.add(entry.getValue());
+          labels.put(entry.getValue(), entry.getLabel());
+        }
+      }
     }
-    for (Schema.PicklistEntry entry : field.getPicklistValues()) {
-      if (entry.isActive()) {
-        values.add(facetValue(entry.getValue(), entry.getLabel(), selected));
+    List<SearchResponseDto.FacetValue> values = new List<SearchResponseDto.FacetValue>();
+    for (String value : facet.values == null ? picklistOrder : facet.values) {
+      if (labels.containsKey(value)) {
+        values.add(facetValue(value, labels.get(value), selected));
       }
     }
     return values;
@@ -276,7 +294,7 @@ public inherited sharing class FacetService {
     Set<String> offered = new Set<String>();
     for (
       SearchResponseDto.FacetValue value : withoutExcludedValues(
-        describeValues(facet.field, new Set<String>()),
+        describeValues(facet, new Set<String>()),
         facet.field,
         target.filterRules
       )

@@ -100,7 +100,10 @@ private class SearchConfigProviderTest {
         SearchTestFactory.boostRule(accounts, 'Rating', 'equals', 'Hot', 25),
         SearchTestFactory.boostRule(accounts, 'Phone', 'contains', '555', null),
         SearchTestFactory.facet(accounts, 'Type', null, 20),
-        SearchTestFactory.facet(accounts, 'Industry', 'Sector', 10),
+        withValues(
+          SearchTestFactory.facet(accounts, 'Industry', 'Sector', 10),
+          'Banking;Energy'
+        ),
         SearchTestFactory.facet(inactive, 'LeadSource', null, 1),
         SearchTestFactory.facet(otherObject, 'StageName', null, 1)
       }
@@ -152,6 +155,8 @@ private class SearchConfigProviderTest {
       'Facets sorted by sort order'
     );
     Assert.areEqual('Sector', accountConfig.facets[0].label);
+    Assert.areEqual('Banking;Energy', accountConfig.facets[0].values);
+    Assert.isNull(accountConfig.facets[1].values, 'Blank Values: all values');
     Assert.isTrue(loaded.objects[1].facets.isEmpty());
   }
 
@@ -285,5 +290,13 @@ private class SearchConfigProviderTest {
     Assert.isTrue(SearchConfig.compareSortKeys(1, 'a', 1, 'b') < 0);
     Assert.isTrue(SearchConfig.compareSortKeys(null, null, null, 'b') < 0);
     Assert.areEqual(0, SearchConfig.compareSortKeys(null, null, null, null));
+  }
+
+  private static Search_Facet__mdt withValues(
+    Search_Facet__mdt facet,
+    String values
+  ) {
+    facet.Values__c = values;
+    return facet;
   }
 }

@@ -35,17 +35,42 @@
               <h3 class="search-facets__section-heading">{section.heading}</h3>
             </template>
             <template for:each={section.facets} for:item="facet">
-              <lightning-checkbox-group
-                key={facet.key}
-                class="search-facets__group"
-                label={facet.label}
-                name={facet.key}
-                options={facet.options}
-                value={facet.selected}
-                data-object-api-name={facet.objectApiName}
-                data-field-api-name={facet.fieldApiName}
-                onchange={handleChange}
-              ></lightning-checkbox-group>
+              <!-- Each filter is a disclosure too: the heading's button shows or hides its values. -->
+              <div key={facet.key} class="search-facets__group">
+                <div
+                  class="search-facets__group-heading"
+                  role="heading"
+                  aria-level={section.facetHeadingLevel}
+                >
+                  <button
+                    type="button"
+                    class="search-facets__group-toggle"
+                    aria-expanded={facet.ariaExpanded}
+                    aria-controls={facet.bodyId}
+                    data-key={facet.key}
+                    onclick={handleGroupToggle}
+                  >
+                    <lightning-icon
+                      icon-name={facet.chevronIcon}
+                      size="xx-small"
+                      class="search-facets__chevron"
+                    ></lightning-icon>
+                    <span>{facet.headingText}</span>
+                  </button>
+                </div>
+                <div id={facet.bodyId} class={facet.bodyClass}>
+                  <lightning-checkbox-group
+                    label={facet.label}
+                    variant="label-hidden"
+                    name={facet.key}
+                    options={facet.options}
+                    value={facet.selected}
+                    data-object-api-name={facet.objectApiName}
+                    data-field-api-name={facet.fieldApiName}
+                    onchange={handleChange}
+                  ></lightning-checkbox-group>
+                </div>
+              </div>
             </template>
           </div>
         </template>

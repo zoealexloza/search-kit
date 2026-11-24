@@ -65,6 +65,8 @@ public inherited sharing class SearchConfig {
     public String fieldApiName;
     public String label;
     public Decimal sortOrder;
+    /** Values to offer, separated by semicolons, as configured; blank offers all values. */
+    public String values;
 
     /**
      * Orders facets by sort order, then developer name.

@@ -179,6 +179,7 @@ public inherited sharing class SearchConfigProvider {
         facetConfig.fieldApiName = facet.Field__c;
         facetConfig.label = facet.Label__c;
         facetConfig.sortOrder = facet.Sort_Order__c;
+        facetConfig.values = facet.Values__c;
         parent.facets.add(facetConfig);
       }
     }

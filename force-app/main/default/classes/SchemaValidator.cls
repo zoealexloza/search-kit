@@ -490,6 +490,12 @@ public inherited sharing class SchemaValidator {
           facetConfig.developerName,
           'another facet already uses field ' + facet.field.getName()
         );
+      } else if (facet.values != null && facet.values.isEmpty()) {
+        logSkip(
+          facetConfig.developerName,
+          'none of the facet\'s Values are active values of field ' +
+          facet.field.getName()
+        );
       } else {
         target.facets.add(facet);
       }
@@ -859,7 +865,54 @@ public inherited sharing class SchemaValidator {
     facet.label = String.isNotBlank(facetConfig.label)
       ? facetConfig.label
       : field.getLabel();
+    facet.values = parseFacetValues(field, facetConfig);
     return facet;
+  }
+
+  /**
+   * Parses a facet's Values allowlist. Each value must be an active picklist value of the field
+   * (any case; the canonical spelling is kept) or true/false for a checkbox. Unknown values and
+   * repeats are skipped; unknown ones are logged.
+   * @param field the facet's validated field
+   * @param facetConfig the facet as configured
+   * @return the values in configured order; null if Values is blank (offer every value); empty
+   *         if no value is valid
+   */
+  @TestVisible
+  private static List<String> parseFacetValues(
+    Schema.DescribeFieldResult field,
+    SearchConfig.FacetConfig facetConfig
+  ) {
+    if (String.isBlank(facetConfig.values)) {
+      return null;
+    }
+    List<String> values = new List<String>();
+    Set<String> seen = new Set<String>();
+    for (String part : facetConfig.values.split(VALUE_SEPARATOR)) {
+      if (String.isBlank(part)) {
+        continue;
+      }
+      // Canonical text: 'true' / 'false' for a checkbox, else the picklist value's spelling.
+      String typed;
+      if (field.getType() == Schema.DisplayType.BOOLEAN) {
+        Boolean flag = parseBoolean(part.trim());
+        typed = flag == null ? null : String.valueOf(flag);
+      } else {
+        typed = canonicalPicklistValue(field, part);
+      }
+      if (typed == null) {
+        logSkip(
+          facetConfig.developerName,
+          'facet value "' +
+            part.trim() +
+            '" is not an active value of field ' +
+            field.getName()
+        );
+      } else if (seen.add(typed)) {
+        values.add(typed);
+      }
+    }
+    return values;
   }
 
   private static Boolean isApiName(String name) {

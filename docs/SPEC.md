@@ -86,12 +86,13 @@ v1 combines all filter rules on an object with **AND**.
 
 ### `Search_Facet__mdt`
 
-| Field              | Type                                  | Notes                                                   |
-| ------------------ | ------------------------------------- | ------------------------------------------------------- |
-| `Search_Object__c` | Metadata Relationship → Search_Object |                                                         |
-| `Field__c`         | Text (validated)                      | Picklist, multi-select picklist, or checkbox only in v1 |
-| `Label__c`         | Text                                  | Optional override of field label                        |
-| `Sort_Order__c`    | Number                                |                                                         |
+| Field              | Type                                  | Notes                                                                                                                                                                                                                        |
+| ------------------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Search_Object__c` | Metadata Relationship → Search_Object |                                                                                                                                                                                                                              |
+| `Field__c`         | Text (validated)                      | Picklist, multi-select picklist, or checkbox only in v1                                                                                                                                                                      |
+| `Label__c`         | Text                                  | Optional override of field label                                                                                                                                                                                             |
+| `Sort_Order__c`    | Number                                |                                                                                                                                                                                                                              |
+| `Values__c`        | Text (255)                            | Optional allowlist and order of offered values (`;`-separated API values), validated against the picklist describe; added 2026-11-24 (owner approved). Text, not Long Text Area: `getAll()` cuts long text at 255 characters |
 
 ## 5. Apex architecture
 
@@ -149,7 +150,7 @@ Keep the scoring formula in one method with a clear docblock — it's a talking 
 Property panel (`js-meta.xml` → `targetConfigs`):
 
 - `searchBox`: `searchPageName` (API name of the results page), `placeholderText`.
-- `searchResults`: `configName` (use a **dynamic picklist** via `VisualEditor.DynamicPickList` Apex class listing active configs), `showFacets` (boolean), `showObjectTabs` (boolean, M8.5).
+- `searchResults`: `configName` (use a **dynamic picklist** via `VisualEditor.DynamicPickList` Apex class listing active configs), `showFacets` (boolean), `showObjectTabs` (boolean, M8.5), `collapseFilters` (boolean, starts each facet collapsed; 2026-11-24).
 
 Navigation: `NavigationMixin` with `standard__recordPage` for result links; `comm__namedPage` for the search page.
 

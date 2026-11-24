@@ -486,4 +486,85 @@ private class FacetServiceTest {
       'Nothing left to select, so no browse query runs'
     );
   }
+
+  // ---- facet Values allowlist ----
+
+  private static SearchTarget industryTarget(String values) {
+    SearchConfig.ObjectConfig config = new SearchConfig.ObjectConfig();
+    config.developerName = 'Accounts';
+    config.objectApiName = 'Account';
+    config.titleField = 'Name';
+    SearchConfig.FacetConfig industry = facet('Industry', null);
+    industry.values = values;
+    config.facets.add(industry);
+    return new SchemaValidator().validate(config);
+  }
+
+  @IsTest
+  static void configuredValuesAreOfferedInTheirOrder() {
+    List<String> industries = SearchTestFactory.picklistValues(
+      Account.Industry,
+      3
+    );
+    SearchTarget target = industryTarget(industries[2] + ';' + industries[0]);
+
+    List<SearchResponseDto.FacetGroup> groups = new FacetService()
+      .describeFacets(
+        new List<SearchTarget>{ target },
+        new Map<String, Map<String, List<Object>>>()
+      );
+
+    Assert.areEqual(1, groups.size());
+    Assert.areEqual(2, groups[0].values.size());
+    Assert.areEqual(industries[2], groups[0].values[0].value);
+    Assert.areEqual(industries[0], groups[0].values[1].value);
+  }
+
+  @IsTest
+  static void selectionsOutsideTheConfiguredValuesAreIgnored() {
+    List<String> industries = SearchTestFactory.picklistValues(
+      Account.Industry,
+      2
+    );
+    List<SearchTarget> targets = new List<SearchTarget>{
+      industryTarget(industries[0])
+    };
+    FacetService service = new FacetService();
+
+    Map<String, Map<String, List<Object>>> resolved = service.resolveSelections(
+      targets,
+      new List<SearchRequestDto.FacetSelection>{
+        SearchTestFactory.selection('Account', 'Industry', industries)
+      }
+    );
+
+    Assert.areEqual(
+      new List<Object>{ industries[0] },
+      resolved.get('account').get('industry'),
+      'A value not in the list (e.g. from an edited URL) is dropped'
+    );
+  }
+
+  @IsTest
+  static void filterRulesStillNarrowConfiguredValues() {
+    List<String> industries = SearchTestFactory.picklistValues(
+      Account.Industry,
+      2
+    );
+    SearchTarget target = industryTarget(industries[0] + ';' + industries[1]);
+    SearchTarget.FieldRule rule = new SearchTarget.FieldRule();
+    rule.field = Account.Industry.getDescribe();
+    rule.operator = 'not_equals';
+    rule.value = industries[0];
+    target.filterRules.add(rule);
+
+    List<SearchResponseDto.FacetGroup> groups = new FacetService()
+      .describeFacets(
+        new List<SearchTarget>{ target },
+        new Map<String, Map<String, List<Object>>>()
+      );
+
+    Assert.areEqual(1, groups[0].values.size());
+    Assert.areEqual(industries[1], groups[0].values[0].value);
+  }
 }

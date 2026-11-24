@@ -564,3 +564,31 @@ Owner request: a lookup detail field (e.g. `AccountId`, `OwnerId`) showed the ra
 ### Open issues
 
 - **To confirm on a site (owner):** Case results with `AccountId` and `OwnerId` details, as a logged-in customer and as a guest. Whether a guest sees owner names depends on the site's user visibility settings; if the guest can't see the owner, the detail is left out.
+
+## 2026-11-24: Facet Values and collapsible filters
+
+Owner requests from their Aura site: a Case Status facet offered all ~20 statuses (some only used by certain record types), and a long filter list should collapse like an accordion.
+
+### Facet Values (data model change, owner approved)
+
+- **New field `Search_Facet__mdt.Values__c`** (Text 255, subscriber controlled): optional allowlist of values to offer, API values separated by `;`, shown in that order; `true`/`false` for checkboxes. Blank offers every active value, as before. It narrows only the filter's choices, not the records found (a filter rule does that).
+- **Validation (`SchemaValidator.parseFacetValues`):** each value must be an active picklist value (any case; canonical spelling kept); unknown ones are skipped and logged; repeats dropped. If none is valid the facet is skipped (logged) instead of silently offering everything.
+- **`FacetService`:** offers only the configured values, in their order; visitor selections outside the list (e.g. an edited `f=` URL) are dropped like any invalid value. Filter rules on the same field still narrow the list.
+- **Why Text (255), not Long Text Area (checked in `sskit`):** `getAll()` and `getInstance()` return a long text area value cut at 255 characters (a 400-character value came back as 255; SOQL returned all 400). Reading it with SOQL instead fails for visitors: a minimum-access user gets "sObject type 'Search_Facet__mdt' is not supported", and granting visitors read on the config types would expose the configuration. 255 characters fits a curated list of roughly 12–20 typical status values.
+- **Record type:** not used. Apex describe has no per-record-type picklist values (only the UI API has them, via a callout guests can't make); the Values list covers the need.
+- The field was first deployed to `sskit` as Long Text Area and replaced (a custom metadata field can't change type in place; removed with a destructive deploy).
+
+### Collapsible filters
+
+- **`searchFacets`:** every facet is its own disclosure (heading with a button, `aria-expanded` / `aria-controls`; heading level 3, or 4 under object headings). Open by default; a closed facet with selections shows the count ("Status (2 selected)", new label `Search_Facet_Heading_Count`). Values stay rendered while hidden, so selections are kept. The open/closed choices live in the panel component.
+- **`searchResults`:** new Builder property **Collapse each filter** (`collapseFilters`, default off) starts every facet closed; a facet with a selection still starts open.
+
+### Tests and checks
+
+- Apex: 171 pass (+7), 97% org-wide. Values order, canonical spelling, unknown and repeated values, checkbox values, facet skipped when nothing is valid, configured order in the response, selections outside the list dropped, filter rules still narrowing.
+- Jest: 156 pass (+9): disclosure per facet, ARIA wiring, heading levels, open/close one facet, collapseFilters default, count in a closed heading, changes after reopening, axe with a facet closed, property passed from `searchResults`. ESLint clean.
+- Code Analyzer: 0 security findings, 251 total (238 before this session). The 13 new ones are in categories already accepted in `docs/SECURITY.md` (table updated): `ApexUnitTestClassShouldHaveRunAs` on the new tests, one `100%` width in the facet CSS, and the `SchemaValidatorTest` class complexity total.
+
+### Open issues
+
+- **To confirm on a site (owner):** a Status facet with Values set; Collapse each filter on and off; keyboard-only open/close of a filter.

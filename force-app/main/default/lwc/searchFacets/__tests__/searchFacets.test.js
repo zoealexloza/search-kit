@@ -46,7 +46,23 @@ const toggleButton = (element) =>
 const panelBody = (element) =>
   element.shadowRoot.querySelector(".search-facets__body");
 
+const groupToggles = (element) => [
+  ...element.shadowRoot.querySelectorAll(".search-facets__group-toggle")
+];
+
+const groupBodies = (element) => [
+  ...element.shadowRoot.querySelectorAll(".search-facets__group-body")
+];
+
+const isCollapsed = (body) =>
+  body.classList.contains("search-facets__group-body_collapsed");
+
 // Real label text for the label whose placeholder the tests check.
+jest.mock(
+  "@salesforce/label/c.Search_Facet_Heading_Count",
+  () => ({ default: "{0} ({1} selected)" }),
+  { virtual: true }
+);
 jest.mock(
   "@salesforce/label/c.Search_Facets_Toggle_Count",
   () => ({ default: "Filters ({0} selected)" }),
@@ -240,6 +256,114 @@ describe("c-search-facets", () => {
   });
 });
 
+describe("c-search-facets collapsible filters", () => {
+  afterEach(() => {
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  it("gives each filter its own disclosure, open by default", () => {
+    const element = createFacets(UNSELECTED);
+    element.expanded = true;
+
+    const toggles = groupToggles(element);
+    const bodies = groupBodies(element);
+    expect(toggles.map((t) => t.textContent.trim())).toEqual([
+      "Category",
+      "Product"
+    ]);
+    toggles.forEach((toggle, index) => {
+      expect(toggle.getAttribute("aria-expanded")).toBe("true");
+      expect(toggle.getAttribute("aria-controls")).toBe(bodies[index].id);
+      expect(isCollapsed(bodies[index])).toBe(false);
+    });
+  });
+
+  it("puts filter headings one level below the panel heading", () => {
+    const element = createFacets(UNSELECTED);
+    const headings = element.shadowRoot.querySelectorAll(
+      ".search-facets__group-heading"
+    );
+    headings.forEach((heading) => {
+      expect(heading.getAttribute("role")).toBe("heading");
+      expect(heading.getAttribute("aria-level")).toBe("3");
+    });
+  });
+
+  it("closes and reopens one filter without touching the others", async () => {
+    const element = createFacets(UNSELECTED);
+
+    groupToggles(element)[0].click();
+    await Promise.resolve();
+
+    expect(groupToggles(element)[0].getAttribute("aria-expanded")).toBe(
+      "false"
+    );
+    expect(isCollapsed(groupBodies(element)[0])).toBe(true);
+    expect(isCollapsed(groupBodies(element)[1])).toBe(false);
+    // Values stay rendered while hidden, so selections are kept.
+    expect(groupsOf(element)).toHaveLength(2);
+
+    groupToggles(element)[0].click();
+    await Promise.resolve();
+    expect(isCollapsed(groupBodies(element)[0])).toBe(false);
+  });
+
+  it("starts every filter closed with collapseFilters, except one with a selection", () => {
+    const element = createElement("c-search-facets", { is: SearchFacets });
+    element.facets = FACETS;
+    element.collapseFilters = true;
+    document.body.appendChild(element);
+
+    const toggles = groupToggles(element);
+    // Category has a selected value, so it starts open.
+    expect(toggles[0].getAttribute("aria-expanded")).toBe("true");
+    expect(toggles[1].getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("shows the selection count on a closed filter's heading", async () => {
+    const element = createFacets(FACETS);
+
+    groupToggles(element)[0].click();
+    await Promise.resolve();
+
+    expect(groupToggles(element)[0].textContent.trim()).toBe(
+      "Category (1 selected)"
+    );
+    expect(groupToggles(element)[1].textContent.trim()).toBe("Product");
+  });
+
+  it("keeps reporting changes from a filter after it is reopened", async () => {
+    const element = createFacets(UNSELECTED);
+    const handler = jest.fn();
+    element.addEventListener("facetchange", handler);
+    groupToggles(element)[1].click();
+    await Promise.resolve();
+    groupToggles(element)[1].click();
+    await Promise.resolve();
+
+    const product = groupsOf(element)[1];
+    product.dispatchEvent(
+      new CustomEvent("change", { detail: { value: ["Atlas_Mobile"] } })
+    );
+
+    expect(handler.mock.calls[0][0].detail).toEqual({
+      objectApiName: "Help_Article__c",
+      fieldApiName: "Product__c",
+      values: ["Atlas_Mobile"]
+    });
+  });
+
+  it("is accessible with a filter closed", async () => {
+    const element = createFacets(FACETS);
+    element.expanded = true;
+    groupToggles(element)[1].click();
+    await Promise.resolve();
+    await expect(element).toBeAccessible();
+  });
+});
+
 describe("c-search-facets with several objects", () => {
   afterEach(() => {
     while (document.body.firstChild) {
@@ -268,6 +392,14 @@ describe("c-search-facets with several objects", () => {
     [...element.shadowRoot.querySelectorAll("h3")].map((h) =>
       h.textContent.trim()
     );
+
+  it("puts filter headings below the object headings", () => {
+    const element = createFacets(TWO_OBJECTS);
+    const levels = [
+      ...element.shadowRoot.querySelectorAll(".search-facets__group-heading")
+    ].map((heading) => heading.getAttribute("aria-level"));
+    expect(levels).toEqual(["4", "4", "4"]);
+  });
 
   it("groups facets under each object's section label", () => {
     const element = createFacets(TWO_OBJECTS);

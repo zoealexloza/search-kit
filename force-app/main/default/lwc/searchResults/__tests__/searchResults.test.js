@@ -475,6 +475,18 @@ describe("c-search-results facets and browse mode", () => {
     expect(statusText(element)).toBe("c.Search_Results_Prompt_Facets");
   });
 
+  it("passes the Collapse each filter setting to the panel", async () => {
+    search.mockResolvedValue(NO_TERM);
+    const element = createElement("c-search-results", { is: SearchResults });
+    element.configName = "Support_Portal_Search";
+    element.showFacets = true;
+    element.collapseFilters = true;
+    document.body.appendChild(element);
+    await showTerm(element, undefined);
+
+    expect(facetPanel(element).collapseFilters).toBe(true);
+  });
+
   it("hides the panel when showFacets is off, even if the server returns facets", async () => {
     search.mockResolvedValue({ ...RESPONSE, facets: FACETS });
     const element = createWithFacets(false);

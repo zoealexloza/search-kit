@@ -1263,4 +1263,69 @@ private class SchemaValidatorTest {
       );
     }
   }
+
+  // ---- facet Values allowlist ----
+
+  @IsTest
+  static void facetValuesKeepConfiguredOrderAndCanonicalSpelling() {
+    List<String> industries = SearchTestFactory.picklistValues(
+      Account.Industry,
+      3
+    );
+    SearchConfig.FacetConfig config = facetConfig('Industry', null);
+    // Reversed, lower case, padded, with a repeat, an unknown value and an empty slot.
+    config.values =
+      ' ' +
+      industries[2].toLowerCase() +
+      ' ;' +
+      industries[0] +
+      ';;Not_A_Value;' +
+      industries[2];
+
+    List<String> values = SchemaValidator.parseFacetValues(
+      Account.Industry.getDescribe(),
+      config
+    );
+
+    Assert.areEqual(
+      new List<String>{ industries[2], industries[0] },
+      values,
+      'Configured order, canonical spelling, unknown and repeated values dropped'
+    );
+  }
+
+  @IsTest
+  static void blankFacetValuesOfferEverything() {
+    Assert.isNull(
+      SchemaValidator.parseFacetValues(
+        Account.Industry.getDescribe(),
+        facetConfig('Industry', null)
+      )
+    );
+  }
+
+  @IsTest
+  static void checkboxFacetValuesAcceptTrueAndFalse() {
+    SearchConfig.FacetConfig config = facetConfig('IsEscalated', null);
+    config.values = 'TRUE;yes';
+    Assert.areEqual(
+      new List<String>{ 'true' },
+      SchemaValidator.parseFacetValues(Case.IsEscalated.getDescribe(), config)
+    );
+  }
+
+  @IsTest
+  static void facetWithNoValidValuesIsSkipped() {
+    SearchConfig.ObjectConfig config = objectConfig('Account', 'Name');
+    SearchConfig.FacetConfig facet = facetConfig('Industry', null);
+    facet.values = 'Not_A_Value;Also_Not';
+    config.facets.add(facet);
+
+    SearchTarget target = new SchemaValidator().validate(config);
+
+    Assert.isTrue(
+      target.facets.isEmpty(),
+      'A list with nothing valid is a config mistake: the facet is not shown with all values'
+    );
+  }
 }

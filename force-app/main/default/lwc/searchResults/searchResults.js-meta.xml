@@ -27,6 +27,13 @@
         default="true"
       />
             <property
+        name="collapseFilters"
+        type="Boolean"
+        label="Collapse each filter"
+        description="Starts every filter in the panel collapsed, so visitors see a short list of filter names and open the ones they need. A filter with a selected value starts open."
+        default="false"
+      />
+            <property
         name="showObjectTabs"
         type="Boolean"
         label="Show object tabs"

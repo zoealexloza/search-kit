@@ -196,6 +196,9 @@ export default class SearchResults extends NavigationMixin(LightningElement) {
   /** Shows the facet panel. Experience Builder defaults it to true (js-meta.xml). */
   @api showFacets = false;
 
+  /** Starts each filter in the panel collapsed (Experience Builder property, default off). */
+  @api collapseFilters = false;
+
   /**
    * Shows an "All" tab plus one tab per object, so visitors can search one object.
    * Experience Builder defaults it to true (js-meta.xml).
