@@ -592,3 +592,8 @@ Owner requests from their Aura site: a Case Status facet offered all ~20 statuse
 ### Open issues
 
 - **To confirm on a site (owner):** a Status facet with Values set; Collapse each filter on and off; keyboard-only open/close of a filter.
+
+## 2026-11-24: Package version 1.1.0 (beta)
+
+- `Search Kit@1.1.0-1` (`04tgK000000bmSHQAY`) created from `main` with code coverage: 96%, coverage requirement met. Includes the Aura header search box, lookup names, facet Values and collapsible filters.
+- **Not promoted yet** (owner approves each promotion). After promotion, the README install links move from 1.0.0 to 1.1.0 and the "1.0.0 doesn't yet include" note goes.

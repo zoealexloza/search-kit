@@ -1,8 +1,8 @@
 {
   "packageDirectories": [
     {
-      "versionName": "1.0",
-      "versionNumber": "1.0.0.NEXT",
+      "versionName": "1.1",
+      "versionNumber": "1.1.0.NEXT",
       "path": "force-app",
       "default": true,
       "package": "Search Kit",
@@ -19,6 +19,7 @@
   "sourceApiVersion": "68.0",
   "packageAliases": {
     "Search Kit": "0HogK0000005YdlSAE",
-    "Search Kit@1.0.0-1": "04tgK000000aIrFQAU"
+    "Search Kit@1.0.0-1": "04tgK000000aIrFQAU",
+    "Search Kit@1.1.0-1": "04tgK000000bmSHQAY"
   }
 }
